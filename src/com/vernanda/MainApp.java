@@ -5,10 +5,29 @@
  */
 package com.vernanda;
 
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
+
 /**
  *
- * @author AsusPC
+ * @author AsusPC vernanda
  */
-public class MainApp {
+public class MainApp extends Application {
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        FXMLLoader loader = new FXMLLoader();
+        loader.
+                setLocation(MainApp.class.
+                        getResource("view/Login.fxml"));
+        BorderPane pane = loader.load();
+        Scene s = new Scene(pane);
+        primaryStage.setScene(s);
+        primaryStage.setTitle("Welcome To OOP2");
+        primaryStage.show();
+    }
 
 }

@@ -147,7 +147,7 @@
                   </TableView>
                </children>
             </VBox>
-            <HBox prefHeight="153.0" prefWidth="304.0" />
+            <HBox fx:id="tableAddBarag" prefHeight="153.0" prefWidth="304.0" />
          </children>
       </GridPane>
    </right>

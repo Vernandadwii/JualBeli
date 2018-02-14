@@ -10,9 +10,12 @@ import com.vernanda.utility.DaoService;
 import com.vernanda.utility.Koneksi;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -59,6 +62,31 @@ public class RoleDaoImpl implements DaoService<Role> {
     @Override
     public List<Role> showAllData() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public Role getData(Role id) {
+        try (Connection connection = Koneksi.createConnection()) {
+            connection.setAutoCommit(false);
+            String querry
+                    = "SELECT idRole, Keterangan FROM role";
+            PreparedStatement ps = connection.prepareStatement(querry);
+            ps.setInt(1, id.getIdRole());
+            ps.setString(3, id.getKeterangan());
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                Role role = new Role();
+                role.setIdRole(rs.getInt(" idRole"));
+                role.setKeterangan(rs.getString("Keterangan"));
+
+                // user.setRole_idRole(rs.get);
+                return role;
+            }
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(UserDaoImpl.class.getName()).
+                    log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
 }

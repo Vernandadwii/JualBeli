@@ -3,21 +3,15 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/E:/Materi%20Kuliah%20IT/Semester4/OOPL/Tugas%20UTS/JualBeli/src/com/vernanda/dao/UserDaoImpl.java</file>
             <file>file:/E:/Materi%20Kuliah%20IT/Semester4/OOPL/Tugas%20UTS/JualBeli/src/com/vernanda/dao/Detail_transaksiDaoImpl.java</file>
-            <file>file:/E:/Materi%20Kuliah%20IT/Semester4/OOPL/Tugas%20UTS/JualBeli/src/com/vernanda/entity/Transaksi.java</file>
             <file>file:/E:/Materi%20Kuliah%20IT/Semester4/OOPL/Tugas%20UTS/JualBeli/src/com/vernanda/entity/Role.java</file>
-            <file>file:/E:/Materi%20Kuliah%20IT/Semester4/OOPL/Tugas%20UTS/JualBeli/src/com/vernanda/controller/AddBarangController.java</file>
-            <file>file:/E:/Materi%20Kuliah%20IT/Semester4/OOPL/Tugas%20UTS/JualBeli/src/com/vernanda/utility/DaoService.java</file>
+            <file>file:/E:/Materi%20Kuliah%20IT/Semester4/OOPL/Tugas%20UTS/JualBeli/src/com/vernanda/entity/Transaksi.java</file>
+            <file>file:/E:/Materi%20Kuliah%20IT/Semester4/OOPL/Tugas%20UTS/JualBeli/src/com/vernanda/entity/Detail_transaksi.java</file>
+            <file>file:/E:/Materi%20Kuliah%20IT/Semester4/OOPL/Tugas%20UTS/JualBeli/src/com/vernanda/dao/BarangDaoImpl.java</file>
+            <file>file:/E:/Materi%20Kuliah%20IT/Semester4/OOPL/Tugas%20UTS/JualBeli/src/com/vernanda/entity/User.java</file>
             <file>file:/E:/Materi%20Kuliah%20IT/Semester4/OOPL/Tugas%20UTS/JualBeli/src/com/vernanda/entity/Barang.java</file>
             <file>file:/E:/Materi%20Kuliah%20IT/Semester4/OOPL/Tugas%20UTS/JualBeli/src/com/vernanda/controller/LoginController.java</file>
-            <file>file:/E:/Materi%20Kuliah%20IT/Semester4/OOPL/Tugas%20UTS/JualBeli/src/com/vernanda/dao/RoleDaoImpl.java</file>
-            <file>file:/E:/Materi%20Kuliah%20IT/Semester4/OOPL/Tugas%20UTS/JualBeli/src/com/vernanda/dao/UserDaoImpl.java</file>
-            <file>file:/E:/Materi%20Kuliah%20IT/Semester4/OOPL/Tugas%20UTS/JualBeli/src/com/vernanda/controller/borderPane.java</file>
-            <file>file:/E:/Materi%20Kuliah%20IT/Semester4/OOPL/Tugas%20UTS/JualBeli/src/com/vernanda/MainApp.java</file>
-            <file>file:/E:/Materi%20Kuliah%20IT/Semester4/OOPL/Tugas%20UTS/JualBeli/src/com/vernanda/utility/Koneksi.java</file>
-            <file>file:/E:/Materi%20Kuliah%20IT/Semester4/OOPL/Tugas%20UTS/JualBeli/src/com/vernanda/entity/Detail_transaksi.java</file>
-            <file>file:/E:/Materi%20Kuliah%20IT/Semester4/OOPL/Tugas%20UTS/JualBeli/src/com/vernanda/entity/User.java</file>
-            <file>file:/E:/Materi%20Kuliah%20IT/Semester4/OOPL/Tugas%20UTS/JualBeli/src/com/vernanda/dao/BarangDaoImpl.java</file>
             <file>file:/E:/Materi%20Kuliah%20IT/Semester4/OOPL/Tugas%20UTS/JualBeli/src/com/vernanda/dao/TransaksiDaoImpl.java</file>
         </group>
     </open-files>

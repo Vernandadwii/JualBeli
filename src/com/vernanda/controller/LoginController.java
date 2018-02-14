@@ -7,8 +7,8 @@ package com.vernanda.controller;
 
 import com.vernanda.MainApp;
 import com.vernanda.dao.UserDaoImpl;
-import com.vernanda.entity.Role;
 import com.vernanda.entity.User;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -41,6 +41,25 @@ public class LoginController implements Initializable {
     @FXML
     private BorderPane bpLogin;
 
+    public UserDaoImpl getUserDaoImpl() {
+        if (userDao == null) {
+            userDao = new UserDaoImpl();
+        }
+        return userDao;
+    }
+
+    private ObservableList<User> users;
+
+    public ObservableList<User> getUser() {
+        if (users == null) {
+            users = FXCollections.observableArrayList();
+            users.addAll(getUserDao().showAllData());
+        }
+        return users;
+    }
+
+    private UserDaoImpl userDao;
+
     /**
      * Initializes the controller class.
      */
@@ -50,22 +69,27 @@ public class LoginController implements Initializable {
     }
 
     @FXML
-    private void btnLoginOnAction(ActionEvent event) {
+    private void btnLoginOnAction(ActionEvent event) throws IOException {
         User user = new User();
-        user.setId_user(txtIdUser.getText());
+        user.setId_user(Integer.valueOf(txtIdUser.getText()));
         user.setPassword(txtPassword.getText());
-        if (getUserDao().getData(user) != null) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        if (txtIdUser.getText().trim().isEmpty()
+                || txtPassword.getText().trim().isEmpty()) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Login Anda berhasil");
             alert.showAndWait();
-
+        } else if (getUserDao().getData(user) != null) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setContentText("Login berhasil");
+            alert.showAndWait();
             FXMLLoader loader = new FXMLLoader();
 
-            Role role = user.getRole_idRole();
-
+//            Role role = user.getRole_idRole();
             //pembeda owner atau kasir
-            loader.setLocation(MainApp.class.getResource(view / Login.fxml));
+            loader.setLocation(MainApp.class.getResource("view/Login.fxml"));
             BorderPane pane = loader.load();
+            getMenuController();
+            MenuController.setRole(getUserDao().getData(user).getRole_idRole());
             Scene scene = new Scene(pane);
             Stage secondStage = new Stage();
             secondStage.setScene(scene);
@@ -83,18 +107,25 @@ public class LoginController implements Initializable {
     }
 
     public UserDaoImpl getUserDao() {
-        if (getUserDao == null) {
-            getUserDao() = new UserDaoImpl();
+        Object UserDao = null;
+        if (UserDao == null) {
+            UserDao = new UserDaoImpl();
         }
-        return getUserDao();
+        UserDaoImpl userDao = null;
+        return userDao;
     }
 
-    private ObservableList<User> users;
+    private ObservableList<User> user;
 
-    public ObservableList<User> getUser() {
+    public ObservableList<User> getUsers() {
         if (users == null) {
             users = FXCollections.observableArrayList();
             users.addAll(getUserDao().showAllData());
         }
+        return users;
+    }
+
+    private void getMenuController() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

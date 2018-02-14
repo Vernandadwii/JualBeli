@@ -5,29 +5,61 @@
  */
 package com.vernanda.entity;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 /**
  *
  * @author AsusPC
  */
 public class Role {
 
-    int idRole;
-    String keterangan;
+    private final IntegerProperty idRole = new SimpleIntegerProperty();
 
     public int getIdRole() {
+        return idRole.get();
+    }
+
+    public void setIdRole(int value) {
+        idRole.set(value);
+    }
+
+    public IntegerProperty idRoleProperty() {
         return idRole;
     }
 
+//    int idRole;
+//    String keterangan;
+//
+//    public int getIdRole() {
+//        return idRole;
+//    }
+//
+//    public String getKeterangan() {
+//        return keterangan;
+//    }
+//
+//    public void setIdRole(int idRole) {
+//        this.idRole = idRole;
+//    }
+//
+//    public void setKeterangan(String keterangan) {
+//        this.keterangan = keterangan;
+//    }
+    private final StringProperty keterangan = new SimpleStringProperty();
+
     public String getKeterangan() {
+        return keterangan.get();
+    }
+
+    public void setKeterangan(String value) {
+        keterangan.set(value);
+    }
+
+    public StringProperty keteranganProperty() {
         return keterangan;
-    }
-
-    public void setIdRole(int idRole) {
-        this.idRole = idRole;
-    }
-
-    public void setKeterangan(String keterangan) {
-        this.keterangan = keterangan;
     }
 
 }

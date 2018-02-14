@@ -16,6 +16,10 @@ import javafx.fxml.Initializable;
  */
 public class MenuController implements Initializable {
 
+    static void setRole(int role_idRole) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     /**
      * Initializes the controller class.
      */

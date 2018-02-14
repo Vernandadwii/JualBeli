@@ -31,13 +31,13 @@ public class UserDaoImpl implements DaoService<User> {
             try (Connection connection = Koneksi.createConnection()) {
                 connection.setAutoCommit(false);
                 String query
-                        = "INSERT INTO User(Id_user,password,nama,alamat,Role_idRole)"
+                        = "INSERT INTO User(Id_user,nama,username,password,Role_idRole)"
                         + "VALUES (?,?,?,?,?)";
                 PreparedStatement ps = connection.prepareStatement(query);
                 ps.setInt(1, object.getId_user());
-                ps.setString(2, object.getPassword());
-                ps.setString(3, object.getNama());
-                ps.setString(4, object.getAlamat());
+                ps.setString(2, object.getNama());
+                ps.setInt(3, object.getUsername());
+                ps.setString(4, object.getPassword());
                 ps.setInt(5, object.getRole_idRole());
                 if (ps.executeUpdate() != 0) {
                     connection.commit();
@@ -54,7 +54,24 @@ public class UserDaoImpl implements DaoService<User> {
 
     @Override
     public int deleteData(User object) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        int result = 0;
+        try {
+            try (Connection connection = Koneksi.createConnection()) {
+                connection.setAutoCommit(false);
+                String query = "DELETE FROM barang WHERE id=?";
+                PreparedStatement ps = connection.prepareStatement(query);
+                ps.setInt(1, object.getId_user());
+                if (ps.executeUpdate() != 0) {
+                    connection.commit();
+                    result = 1;
+                } else {
+                    connection.rollback();
+                }
+            }
+        } catch (ClassNotFoundException | SQLException ex) {
+            System.out.println(ex);
+        }
+        return result;
     }
 
     @Override
@@ -67,14 +84,17 @@ public class UserDaoImpl implements DaoService<User> {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    @Override
     public User getData(User id) {
         try (Connection connection = Koneksi.createConnection()) {
             connection.setAutoCommit(false);
             String querry
-                    = "SELECT u.Id_user,u.password,u.nama,u.alamat,r.Role_idRole FROM User u join Role r on u.Role_idRole=r.Role_idRole";
+                    = "SELECT u.Id_user,u.nama,u.username,u.password,r.Role_idRole FROM User u join Role r on u.Role_idRole=r.Role_idRole";
             PreparedStatement ps = connection.prepareStatement(querry);
             ps.setInt(1, id.getId_user());
-            ps.setString(2, id.getPassword());
+            ps.setString(2, id.getNama());
+            ps.setInt(3, id.getUsername());
+            ps.setString(4, id.getPassword());
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 User user = new User();

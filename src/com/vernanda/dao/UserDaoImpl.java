@@ -5,6 +5,7 @@
  */
 package com.vernanda.dao;
 
+import com.vernanda.entity.Role;
 import com.vernanda.entity.User;
 import com.vernanda.utility.DaoService;
 import com.vernanda.utility.Koneksi;
@@ -38,7 +39,7 @@ public class UserDaoImpl implements DaoService<User> {
                 ps.setString(2, object.getNama());
                 ps.setInt(3, object.getUsername());
                 ps.setString(4, object.getPassword());
-                ps.setInt(5, object.getRole_idRole());
+                ps.setInt(5, object.getRole_idRole().getIdRole());
                 if (ps.executeUpdate() != 0) {
                     connection.commit();
                     result = 1;
@@ -76,7 +77,30 @@ public class UserDaoImpl implements DaoService<User> {
 
     @Override
     public int updateData(User object) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Timestamp t = new Timestamp(System.currentTimeMillis());
+        int result = 0;
+        try {
+            try (Connection connection = Koneksi.createConnection()) {
+                connection.setAutoCommit(false);
+                String query = "UPDATE user SET Nama=?,Username=?,Password=?,"
+                        + "recomended=?,created=?,category_id=? WHERE id=?";
+                PreparedStatement ps = connection.prepareStatement(query);
+                ps.setInt(1, object.getId_user());
+                ps.setString(2, object.getNama());
+                ps.setInt(3, object.getUsername());
+                ps.setString(4, object.getPassword());
+                ps.setInt(5, object.getRole_idRole().getIdRole());
+                if (ps.executeUpdate() != 0) {
+                    connection.commit();
+                    result = 1;
+                } else {
+                    connection.rollback();
+                }
+            }
+        } catch (ClassNotFoundException | SQLException ex) {
+            System.out.println(ex);
+        }
+        return result;
     }
 
     @Override
@@ -89,19 +113,19 @@ public class UserDaoImpl implements DaoService<User> {
         try (Connection connection = Koneksi.createConnection()) {
             connection.setAutoCommit(false);
             String querry
-                    = "SELECT u.Id_user,u.nama,u.username,u.password,r.Role_idRole FROM User u join Role r on u.Role_idRole=r.Role_idRole";
+                    = "SELECT Id_user,password,idRole FROM User u join Role r on u.Role_idRole=r.idRole WHERE u.Id_user=? AND u.password=?";
             PreparedStatement ps = connection.prepareStatement(querry);
             ps.setInt(1, id.getId_user());
-            ps.setString(2, id.getNama());
-            ps.setInt(3, id.getUsername());
-            ps.setString(4, id.getPassword());
+            ps.setString(2, id.getPassword());
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 User user = new User();
                 user.setId_user(rs.getInt("u.Id_user"));
                 user.setPassword(rs.getString("u.Password"));
                 // user.setRole_idRole(rs.get);
-
+                Role userRole = new Role();
+                userRole.setIdRole(rs.getInt("idRole"));
+                user.setRole_idRole(userRole);
                 return user;
             }
         } catch (ClassNotFoundException | SQLException ex) {

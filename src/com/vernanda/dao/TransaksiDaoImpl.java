@@ -80,7 +80,7 @@ public class TransaksiDaoImpl implements DaoService<Transaksi> {
             if (rs.next()) {
                 Transaksi transaksi = new Transaksi();
                 transaksi.setNo_transaksi(rs.getString("t.no_transaksi"));
-                transaksi.setTgl_transaksi(rs.getTimestamp("t.tgl_transaksi"));
+
                 transaksi.setHarga(rs.getInt("t.t.harga"));
 
                 // user.setRole_idRole(rs.get);

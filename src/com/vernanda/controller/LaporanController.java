@@ -7,7 +7,11 @@ package com.vernanda.controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 
 /**
  * FXML Controller class
@@ -16,12 +20,21 @@ import javafx.fxml.Initializable;
  */
 public class LaporanController implements Initializable {
 
+    @FXML
+    private ComboBox<?> txtSort;
+    @FXML
+    private Button btnBack;
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+    }
+
+    @FXML
+    private void btnBackOnAction(ActionEvent event) {
     }
 
 }

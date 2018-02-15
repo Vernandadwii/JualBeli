@@ -41,7 +41,7 @@ public class LoginController implements Initializable {
     @FXML
     private BorderPane bpLogin;
 
-    public UserDaoImpl getUserDaoImpl() {
+    public UserDaoImpl getUserDao() {
         if (userDao == null) {
             userDao = new UserDaoImpl();
         }
@@ -73,46 +73,39 @@ public class LoginController implements Initializable {
         User user = new User();
         user.setId_user(Integer.valueOf(txtIdUser.getText()));
         user.setPassword(txtPassword.getText());
-        if (txtIdUser.getText().trim().isEmpty()
-                || txtPassword.getText().trim().isEmpty()) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Login Anda berhasil");
-            alert.showAndWait();
-        } else if (getUserDao().getData(user) != null) {
+        if (getUserDao().getData(user) != null) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setContentText("Login berhasil");
             alert.showAndWait();
-            FXMLLoader loader = new FXMLLoader();
 
-//            Role role = user.getRole_idRole();
-            //pembeda owner atau kasir
-            loader.setLocation(MainApp.class.getResource("view/Login.fxml"));
-            BorderPane pane = loader.load();
-            getMenuController();
-            MenuController.setRole(getUserDao().getData(user).getRole_idRole());
-            Scene scene = new Scene(pane);
-            Stage secondStage = new Stage();
-            secondStage.setScene(scene);
-            secondStage.setTitle("Login");
-            secondStage.show();
-
-            //tutup login stage
+            if (getUserDao().getData(user).getRole_idRole().getIdRole() == 1) {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(MainApp.class.getResource("view/Menu.fxml"));
+                BorderPane pane = loader.load();
+                Scene scene = new Scene(pane);
+                Stage seconstaStage = new Stage();
+                seconstaStage.setScene(scene);
+                seconstaStage.setTitle("Menu Owner");
+                seconstaStage.show();
+            } else if (getUserDao().getData(user).getRole_idRole().getIdRole()
+                    == 2) {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(MainApp.class.
+                        getResource("view/Laporan.fxml"));
+                BorderPane pane = loader.load();
+                Scene scene = new Scene(pane);
+                Stage seconstaStage = new Stage();
+                seconstaStage.setScene(scene);
+                seconstaStage.setTitle("Kasir Form");
+                seconstaStage.show();
+            }
+            //close login stage
             bpLogin.getScene().getWindow().hide();
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText(
-                    "Username atau password yang anda masukkan salah !");
+            alert.setContentText("Id user atau password salah");
             alert.showAndWait();
         }
-    }
-
-    public UserDaoImpl getUserDao() {
-        Object UserDao = null;
-        if (UserDao == null) {
-            UserDao = new UserDaoImpl();
-        }
-        UserDaoImpl userDao = null;
-        return userDao;
     }
 
     private ObservableList<User> user;

@@ -34,12 +34,13 @@ public class BarangDaoImpl implements DaoService<Barang> {
             try (Connection connection = Koneksi.createConnection()) {
                 connection.setAutoCommit(false);
                 String query
-                        = "INSERT INTO Barang(Kd_barang,Nama_brng,harga,jumlah)"
+                        = "INSERT INTO Barang(Nama_brng,harga_modal,harga,jumlah)"
                         + "VALUES (?,?,?,?)";
                 PreparedStatement ps = connection.prepareStatement(query);
-                ps.setInt(1, object.getKd_barang());
-                ps.setString(2, object.getNama_brng());
-                ps.setDouble(3, object.getJumlah());
+
+                ps.setString(1, object.getNama_brng());
+                ps.setInt(2, object.getHarga_modal());
+                ps.setInt(3, object.getHarga());
                 ps.setInt(4, object.getJumlah());
                 if (ps.executeUpdate() != 0) {
                     connection.commit();
@@ -84,12 +85,14 @@ public class BarangDaoImpl implements DaoService<Barang> {
         try {
             try (Connection connection = Koneksi.createConnection()) {
                 connection.setAutoCommit(false);
-                String query = "";
+                String query
+                        = " UPDATE barang SET  nama_brng=?, jumlah=?, harga_modal=?, harga = ? WHERE Kd_barang=?";
                 PreparedStatement ps = connection.prepareStatement(query);
                 ps.setInt(1, object.getKd_barang());
                 ps.setString(2, object.getNama_brng());
-                ps.setInt(3, object.getHarga());
-                ps.setInt(4, object.getJumlah());
+                ps.setInt(3, object.getJumlah());
+                ps.setInt(4, object.getHarga_modal());
+                ps.setInt(5, object.getHarga());
 
                 if (ps.executeUpdate() != 0) {
                     connection.commit();
@@ -110,15 +113,18 @@ public class BarangDaoImpl implements DaoService<Barang> {
         try {
             try (Connection connection = Koneksi.createConnection()) {
                 String query
-                        = "SELECT Kd_Barang, nama_brng, harga, jumlah FROM Barang ";
+                        = "SELECT Kd_Barang, nama_brng,jumlah,harga_modal, harga FROM Barang ";
                 PreparedStatement ps = connection.prepareStatement(query);
                 ResultSet rs = ps.executeQuery();
                 while (rs.next()) {
                     Barang cat = new Barang();
                     cat.setKd_barang(rs.getInt("Kd_barang"));
                     cat.setNama_brng(rs.getString("nama_brng"));
-                    cat.setHarga(rs.getInt("harga"));
                     cat.setJumlah(rs.getInt("jumlah"));
+                    cat.setHarga_modal(rs.getInt("harga_modal"));
+                    cat.setHarga(rs.getInt("harga"));
+
+                    barangs.add(cat);
                 }
             }
         } catch (ClassNotFoundException | SQLException ex) {

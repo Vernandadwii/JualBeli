@@ -5,12 +5,18 @@
  */
 package com.vernanda.controller;
 
+import com.vernanda.MainApp;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -28,20 +34,45 @@ public class MenuController implements Initializable {
     private Button btnAddUser;
     @FXML
     private Button btnLaporan;
+    private Stage items;
+    @FXML
+    private BorderPane borderPane;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        System.out.println("asddd33dssss");
-        System.out.println("asdasdasdsadsadsad");
-        System.out.println("hasdsadsadsadsadsad");
+
         // TODO
     }
 
     @FXML
     private void btnAddBarangOnAction(ActionEvent event) {
+        try {
+            if (items == null) {
+                items = new Stage();
+                items.setTitle("item Management");
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(MainApp.class.getResource(
+                        "view/AddBarang.fxml"));
+                BorderPane root = loader.load();
+                Scene scene = new Scene(root);
+                AddBarangController secondLayoutController = loader.
+                        getController();
+                secondLayoutController.setMainController(this);
+                items.setScene(scene);
+                items.initOwner(borderPane.getScene().getWindow());
+                items.initModality(Modality.WINDOW_MODAL);
+            }
+            if (!items.isShowing()) {
+                items.show();
+            } else {
+                items.toFront();
+            }
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
     }
 
     @FXML

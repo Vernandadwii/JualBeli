@@ -30,6 +30,19 @@ public class Barang {
         return Kd_barang;
     }
     private final IntegerProperty harga = new SimpleIntegerProperty();
+    private final IntegerProperty harga_modal = new SimpleIntegerProperty();
+
+    public int getHarga_modal() {
+        return harga_modal.get();
+    }
+
+    public void setHarga_modal(int value) {
+        harga_modal.set(value);
+    }
+
+    public IntegerProperty harga_modalProperty() {
+        return harga_modal;
+    }
 
     public int getHarga() {
         return harga.get();

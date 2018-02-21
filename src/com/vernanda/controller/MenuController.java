@@ -35,6 +35,7 @@ public class MenuController implements Initializable {
     @FXML
     private Button btnLaporan;
     private Stage items;
+    private Stage items2;
     @FXML
     private BorderPane borderPane;
 
@@ -62,7 +63,7 @@ public class MenuController implements Initializable {
                         getController();
                 secondLayoutController.setMainController(this);
                 items.setScene(scene);
-                items.initOwner(borderPane.getScene().getWindow());
+//                items.initOwner(borderPane.getScene().getWindow());
                 items.initModality(Modality.WINDOW_MODAL);
             }
 
@@ -79,29 +80,29 @@ public class MenuController implements Initializable {
     @FXML
     private void btnAddUserOnAction(ActionEvent event) {
         try {
-            if (items == null) {
-                items = new Stage();
-                items.setTitle("item Management");
+            if (items2 == null) {
+                items2 = new Stage();
+                items2.setTitle("User Management");
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(MainApp.class.getResource(
                         "view/AddUser.fxml"));
                 BorderPane root = loader.load();
                 Scene scene = new Scene(root);
-                AddBarangController secondLayoutController = loader.
+                AddUserController secondLayoutController = loader.
                         getController();
                 secondLayoutController.setMainController(this);
-                items.setScene(scene);
-                items.initOwner(borderPane.getScene().getWindow());
-                items.initModality(Modality.WINDOW_MODAL);
+                items2.setScene(scene);
+//                items2.initOwner(borderPane.getScene().getWindow());
+                items2.initModality(Modality.WINDOW_MODAL);
             }
 
         } catch (Exception e) {
             System.out.println(e.toString());
         }
-        if (!items.isShowing()) {
-            items.show();
+        if (!items2.isShowing()) {
+            items2.show();
         } else {
-            items.toFront();
+            items2.toFront();
         }
     }
 

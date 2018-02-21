@@ -6,7 +6,9 @@
 package com.vernanda.entity;
 
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -54,6 +56,33 @@ public class User {
 
     public StringProperty alamatProperty() {
         return alamat;
+    }
+    private final ObjectProperty<Role> Role_idRole
+            = new SimpleObjectProperty<>();
+
+    public Role getRole_idRole() {
+        return Role_idRole.get();
+    }
+
+    public void setRole_idRole(Role value) {
+        Role_idRole.set(value);
+    }
+
+    public ObjectProperty Role_idRoleProperty() {
+        return Role_idRole;
+    }
+    private final StringProperty password = new SimpleStringProperty();
+
+    public String getPassword() {
+        return password.get();
+    }
+
+    public void setPassword(String value) {
+        password.set(value);
+    }
+
+    public StringProperty passwordProperty() {
+        return password;
     }
 
 //

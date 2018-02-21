@@ -23,6 +23,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.input.MouseEvent;
 
 /**
  * FXML Controller class
@@ -61,8 +62,6 @@ public class AddUserController implements Initializable {
     private TableColumn<User, String> alamat;
     private MenuController menuController;
     @FXML
-    private TextField txtId_user;
-    @FXML
     private PasswordField txtPassword;
     @FXML
     private ToggleGroup jeniskel;
@@ -87,7 +86,7 @@ public class AddUserController implements Initializable {
     public ObservableList<User> getUser() {
         if (Users == null) {
             Users = FXCollections.observableArrayList();
-//            Users.addAll(getUserDao().showAllData());
+            Users.addAll(getUserDao().showAllData());
         }
         return Users;
     }
@@ -100,7 +99,7 @@ public class AddUserController implements Initializable {
     }
 
     public void setMainController(MenuController menuController) {
-        this.menuController = menuController;
+
     }
 
     @FXML
@@ -133,35 +132,67 @@ public class AddUserController implements Initializable {
 
     @FXML
     private void btnUbahOnAction(ActionEvent event) {
-//        Utility utility = new Utility();
-//        if (!utility.isEmptyField(txtPassword, txtNama, txtAlamat)) {
-//            User user = new User();
-//            user.setId_user(selectedUser.getId_user());
-//            user.setNama(txtNama.getText().trim());
-//            user.setJumlah(Integer.valueOf(txtJumlah.getText().trim()));
-//            user.setHarga_modal(Integer.
-//                    valueOf(txtHargaModal.getText().trim()));
-//            user.setHarga(Integer.valueOf(txtHargaJual.getText().trim()));
-//            if (getBarangDao().updateData(barang) == 1) {
-//                getBarangDao().updateData(barang);
-//                getBarang().clear();
-//                getBarang().addAll(getBarangDao().showAllData());
-//
-//                tabelAddBarang.refresh();
-//            }
-//        } else {
-//            Alert alert = new Alert(Alert.AlertType.ERROR);
-//            alert.setContentText("Silahkan ketik ulang");
-//            alert.showAndWait();
-//        }
+        Utility utility = new Utility();
+        if (!utility.isEmptyField(txtPassword, txtNama, txtAlamat)) {
+            User user = new User();
+            user.setId_user(selectedUser.getId_user());
+            user.setNama(txtNama.getText().trim());
+            user.setPassword(txtPassword.getText().trim());
+            user.setAlamat(txtAlamat.getText().trim());
+            if (getUserDao().updateData(user) == 1) {
+                getUserDao().updateData(user);
+                getUser().clear();
+                getUser().addAll(getUserDao().showAllData());
+
+                tabelAddUser.refresh();
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Silahkan ketik ulang");
+            alert.showAndWait();
+        }
     }
 
     @FXML
     private void btnHapusOnAction(ActionEvent event) {
+        Utility utility = new Utility();
+        if (!utility.isEmptyField(txtPassword, txtNama, txtAlamat)) {
+            User user = new User();
+            user.setId_user(selectedUser.getId_user());
+            user.setNama(txtNama.getText().trim());
+            user.setPassword(txtPassword.getText().trim());
+            user.setAlamat(txtAlamat.getText().trim());
+            if (getUserDao().deleteData(user) == 1) {
+                getUserDao().deleteData(user);
+                getUser().clear();
+                getUser().addAll(getUserDao().showAllData());
+
+                tabelAddUser.refresh();
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Silahkan ketik ulang");
+            alert.showAndWait();
+        }
     }
 
     @FXML
     private void btnBackOnAction(ActionEvent event) {
+    }
+
+    @FXML
+    private void tableAddOwnerOnClick(MouseEvent event) {
+        selectedUser = tabelAddUser.getSelectionModel().getSelectedItem();
+        btnHapus.setDisable(false);
+
+        if (selectedUser != null) {
+            txtNama.setText(selectedUser.getNama());
+            txtPassword.setText(String.valueOf(selectedUser.getPassword()));
+            txtAlamat.setText(String.valueOf(selectedUser.getAlamat()));
+
+            System.out.println(selectedUser.getNama());
+
+        }
     }
 
 }

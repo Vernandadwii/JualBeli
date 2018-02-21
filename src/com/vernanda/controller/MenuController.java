@@ -65,18 +65,44 @@ public class MenuController implements Initializable {
                 items.initOwner(borderPane.getScene().getWindow());
                 items.initModality(Modality.WINDOW_MODAL);
             }
-            if (!items.isShowing()) {
-                items.show();
-            } else {
-                items.toFront();
-            }
+
         } catch (Exception e) {
             System.out.println(e.toString());
+        }
+        if (!items.isShowing()) {
+            items.show();
+        } else {
+            items.toFront();
         }
     }
 
     @FXML
     private void btnAddUserOnAction(ActionEvent event) {
+        try {
+            if (items == null) {
+                items = new Stage();
+                items.setTitle("item Management");
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(MainApp.class.getResource(
+                        "view/AddUser.fxml"));
+                BorderPane root = loader.load();
+                Scene scene = new Scene(root);
+                AddBarangController secondLayoutController = loader.
+                        getController();
+                secondLayoutController.setMainController(this);
+                items.setScene(scene);
+                items.initOwner(borderPane.getScene().getWindow());
+                items.initModality(Modality.WINDOW_MODAL);
+            }
+
+        } catch (Exception e) {
+            System.out.println(e.toString());
+        }
+        if (!items.isShowing()) {
+            items.show();
+        } else {
+            items.toFront();
+        }
     }
 
     @FXML

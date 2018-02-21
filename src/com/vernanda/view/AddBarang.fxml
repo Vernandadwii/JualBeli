@@ -128,7 +128,7 @@
          <children>
             <VBox prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <TableView fx:id="tabelAddBarang" prefHeight="258.0" prefWidth="446.0" VBox.vgrow="ALWAYS">
+                  <TableView fx:id="tabelAddBarang" onMouseClicked="#tableAddBarangOnClick" prefHeight="258.0" prefWidth="446.0" VBox.vgrow="ALWAYS">
                     <columns>
                       <TableColumn fx:id="kdBarang" prefWidth="100.0" text="Kode_Barang" />
                       <TableColumn fx:id="namaBarang" minWidth="0.0" prefWidth="109.0" text="Nama_Barang" />
@@ -139,7 +139,6 @@
                   </TableView>
                </children>
             </VBox>
-            <HBox fx:id="tableAddBarag" prefHeight="153.0" prefWidth="304.0" scaleShape="false" />
          </children>
       </GridPane>
    </right>

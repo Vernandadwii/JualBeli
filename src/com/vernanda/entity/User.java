@@ -6,9 +6,7 @@
 package com.vernanda.entity;
 
 import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -31,45 +29,31 @@ public class User {
     public IntegerProperty Id_userProperty() {
         return Id_user;
     }
-    private final IntegerProperty username = new SimpleIntegerProperty();
+    private final IntegerProperty j_kelamin = new SimpleIntegerProperty();
 
-    public int getUsername() {
-        return username.get();
+    public int getJ_kelamin() {
+        return j_kelamin.get();
     }
 
-    public void setUsername(int value) {
-        username.set(value);
+    public void setJ_kelamin(int value) {
+        j_kelamin.set(value);
     }
 
-    public IntegerProperty usernameProperty() {
-        return username;
+    public IntegerProperty j_kelaminProperty() {
+        return j_kelamin;
     }
-    private final StringProperty password = new SimpleStringProperty();
+    private final StringProperty alamat = new SimpleStringProperty();
 
-    public String getPassword() {
-        return password.get();
-    }
-
-    public void setPassword(String value) {
-        password.set(value);
+    public String getAlamat() {
+        return alamat.get();
     }
 
-    public StringProperty passwordProperty() {
-        return password;
-    }
-    private final ObjectProperty<Role> Role_idRole
-            = new SimpleObjectProperty<>();
-
-    public Role getRole_idRole() {
-        return Role_idRole.get();
+    public void setAlamat(String value) {
+        alamat.set(value);
     }
 
-    public void setRole_idRole(Role value) {
-        Role_idRole.set(value);
-    }
-
-    public ObjectProperty Role_idRoleProperty() {
-        return Role_idRole;
+    public StringProperty alamatProperty() {
+        return alamat;
     }
 
 //

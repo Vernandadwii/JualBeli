@@ -20,7 +20,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.HBox;
+import javafx.scene.input.MouseEvent;
 
 /**
  * FXML Controller class
@@ -45,8 +45,6 @@ public class AddBarangController implements Initializable {
     private Button btnBack;
     @FXML
     private TextField txtJumlah;
-    @FXML
-    private HBox tableAddBarag;
 
     private MenuController mainController;
 
@@ -64,12 +62,24 @@ public class AddBarangController implements Initializable {
     private TableColumn<Barang, Integer> h_jual;
     @FXML
     private TableView<Barang> tabelAddBarang;
+    public Barang selectedBarang;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        tabelAddBarang.setItems(getBarang());
+        kdBarang.setCellValueFactory(p -> p.getValue().Kd_barangProperty().
+                asObject());
+        namaBarang.setCellValueFactory(p -> p.getValue().nama_brngProperty());
+        jumlah.
+                setCellValueFactory(p -> p.getValue().jumlahProperty().
+                        asObject());
+        h_modal.
+                setCellValueFactory(p -> p.getValue().harga_modalProperty().
+                        asObject());
+        h_jual.setCellValueFactory(p -> p.getValue().hargaProperty().asObject());
     }
 
     public ObservableList<Barang> getBarang() {
@@ -90,17 +100,6 @@ public class AddBarangController implements Initializable {
     public void setMainController(MenuController mainController) {
         //   categoryDao = new CategoryDaoImpl();
 
-        tabelAddBarang.setItems(getBarang());
-        kdBarang.setCellValueFactory(p -> p.getValue().Kd_barangProperty().
-                asObject());
-        namaBarang.setCellValueFactory(p -> p.getValue().nama_brngProperty());
-        jumlah.
-                setCellValueFactory(p -> p.getValue().jumlahProperty().
-                        asObject());
-        h_modal.
-                setCellValueFactory(p -> p.getValue().harga_modalProperty().
-                        asObject());
-        h_jual.setCellValueFactory(p -> p.getValue().hargaProperty().asObject());
     }
 
     @FXML
@@ -131,21 +130,23 @@ public class AddBarangController implements Initializable {
 
     @FXML
     private void btnUbahOnAction(ActionEvent event) {
-        if (!Utility.isEmptyField(txtNamaBarang, txtJumlah,
+        Utility utility = new Utility();
+        if (!utility.isEmptyField(txtNamaBarang, txtJumlah,
                 txtHargaModal, txtHargaJual)) {
             Barang barang = new Barang();
+            barang.setKd_barang(selectedBarang.getKd_barang());
             barang.setNama_brng(txtNamaBarang.getText().trim());
             barang.setJumlah(Integer.valueOf(txtJumlah.getText().trim()));
             barang.setHarga_modal(Integer.
                     valueOf(txtHargaModal.getText().trim()));
             barang.setHarga(Integer.valueOf(txtHargaJual.getText().trim()));
-            getBarangDao().updateData(barang);
-            getBarang().clear();
-            getBarang().addAll(getBarangDao().showAllData());
-            //mainController.getDepartmentDao().updateData(selectedDepartment);
-            //mainController.getDepartments().clear();
-            //mainController.getDepartments().addAll(mainController.getDepartmentDao().showAllData());
-            //this.resetFieldAndButton();
+            if (getBarangDao().updateData(barang) == 1) {
+                getBarangDao().updateData(barang);
+                getBarang().clear();
+                getBarang().addAll(getBarangDao().showAllData());
+
+                tabelAddBarang.refresh();
+            }
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Silahkan ketik ulang");
@@ -155,11 +156,50 @@ public class AddBarangController implements Initializable {
 
     @FXML
     private void btnHapusOnAction(ActionEvent event) {
+        Utility utility = new Utility();
+        if (!utility.isEmptyField(txtNamaBarang, txtJumlah,
+                txtHargaModal, txtHargaJual)) {
+            Barang barang = new Barang();
+            barang.setKd_barang(selectedBarang.getKd_barang());
+            barang.setNama_brng(txtNamaBarang.getText().trim());
+            barang.setJumlah(Integer.valueOf(txtJumlah.getText().trim()));
+            barang.setHarga_modal(Integer.
+                    valueOf(txtHargaModal.getText().trim()));
+            barang.setHarga(Integer.valueOf(txtHargaJual.getText().trim()));
+            if (getBarangDao().deleteData(barang) == 1) {
+                getBarangDao().deleteData(barang);
+                getBarang().clear();
+                getBarang().addAll(getBarangDao().showAllData());
+
+                tabelAddBarang.refresh();
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setContentText("Silahkan ketik ulang");
+            alert.showAndWait();
+        }
     }
 
     @FXML
     private void btnBackOnAction(ActionEvent event) {
 
+    }
+
+    @FXML
+    private void tableAddBarangOnClick(MouseEvent event) {
+        selectedBarang = tabelAddBarang.getSelectionModel().getSelectedItem();
+        btnHapus.setDisable(false);
+
+        if (selectedBarang != null) {
+            txtNamaBarang.setText(selectedBarang.getNama_brng());
+            txtJumlah.setText(String.valueOf(selectedBarang.getJumlah()));
+            txtHargaModal.setText(String.
+                    valueOf(selectedBarang.getHarga_modal()));
+            txtHargaJual.setText(String.valueOf(selectedBarang.getHarga()));
+
+            System.out.println(selectedBarang.getNama_brng());
+
+        }
     }
 
 }

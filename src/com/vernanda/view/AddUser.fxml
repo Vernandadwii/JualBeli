@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
@@ -62,7 +63,7 @@
                            <children>
                               <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                                  <children>
-                                    <Label text="IdUser :" />
+                                    <Label text="Id_user" />
                                  </children>
                               </HBox>
                            </children>
@@ -71,34 +72,10 @@
                   </HBox>
                   <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
                      <children>
-                        <TextField fx:id="txtIdUser" />
+                        <TextField fx:id="txtAlamat1" />
                      </children>
                   </HBox>
                   <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="1">
-                     <children>
-                        <GridPane prefHeight="40.0" prefWidth="77.0">
-                           <children>
-                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
-                                 <children>
-                                    <Label text="Password :" />
-                                 </children>
-                              </HBox>
-                           </children>
-                           <columnConstraints>
-                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                           </columnConstraints>
-                           <rowConstraints>
-                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                           </rowConstraints>
-                        </GridPane>
-                     </children>
-                  </HBox>
-                  <HBox alignment="CENTER" prefHeight="36.0" prefWidth="218.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-                     <children>
-                        <TextField fx:id="txtPassword" />
-                     </children>
-                  </HBox>
-                  <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="2">
                      <children>
                         <GridPane prefHeight="40.0" prefWidth="77.0">
                            <children>
@@ -117,18 +94,18 @@
                         </GridPane>
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                  <HBox alignment="CENTER" prefHeight="36.0" prefWidth="218.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <children>
                         <TextField fx:id="txtNama" />
                      </children>
                   </HBox>
-                  <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="3">
+                  <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="2">
                      <children>
                         <GridPane prefHeight="40.0" prefWidth="77.0">
                            <children>
                               <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                                  <children>
-                                    <Label text="Keterangan : " />
+                                    <Label text="Jenis Kelamin" />
                                  </children>
                               </HBox>
                            </children>
@@ -141,12 +118,17 @@
                         </GridPane>
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER" prefHeight="50.0" prefWidth="224.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <children>
-                        <TextField fx:id="txtKeterangan" />
+                        <RadioButton fx:id="perempuan" mnemonicParsing="false" text="P">
+                           <HBox.margin>
+                              <Insets right="50.0" />
+                           </HBox.margin>
+                        </RadioButton>
+                        <RadioButton fx:id="laki" mnemonicParsing="false" text="L" />
                      </children>
                   </HBox>
-                  <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="4">
+                  <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="3">
                      <children>
                         <GridPane prefHeight="40.0" prefWidth="77.0">
                            <children>
@@ -165,11 +147,27 @@
                         </GridPane>
                      </children>
                   </HBox>
-                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                  <HBox alignment="CENTER" prefHeight="50.0" prefWidth="224.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                      <children>
                         <TextField fx:id="txtAlamat" />
                      </children>
                   </HBox>
+                  <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="4">
+                     <children>
+                        <GridPane prefHeight="40.0" prefWidth="77.0">
+                           <children>
+                              <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" />
+                           </children>
+                           <columnConstraints>
+                              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                           </columnConstraints>
+                           <rowConstraints>
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                           </rowConstraints>
+                        </GridPane>
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                   <HBox prefHeight="84.0" prefWidth="246.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
                      <children>
                         <GridPane prefHeight="84.0" prefWidth="212.0">
@@ -222,13 +220,12 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <TableView prefHeight="325.0" prefWidth="418.0">
+                  <TableView fx:id="tabelAddUser" prefHeight="325.0" prefWidth="418.0">
                     <columns>
-                      <TableColumn prefWidth="66.0" text="IdUser" />
-                      <TableColumn prefWidth="100.0" text="Password" />
-                        <TableColumn prefWidth="115.0" text="Nama" />
-                        <TableColumn prefWidth="71.0" text="Keterangan" />
-                        <TableColumn prefWidth="118.0" text="Alamat" />
+                      <TableColumn fx:id="id_user" prefWidth="67.0" text="Id_user" />
+                      <TableColumn fx:id="nama" prefWidth="163.0" text="Nama" />
+                        <TableColumn fx:id="j_kelamin" prefWidth="109.0" text="Jenis_kelamin" />
+                        <TableColumn fx:id="alamat" prefWidth="131.0" text="Alamat" />
                     </columns>
                   </TableView>
                </children>

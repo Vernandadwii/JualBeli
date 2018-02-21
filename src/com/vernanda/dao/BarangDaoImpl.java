@@ -62,7 +62,7 @@ public class BarangDaoImpl implements DaoService<Barang> {
         try {
             try (Connection connection = Koneksi.createConnection()) {
                 connection.setAutoCommit(false);
-                String query = "DELETE FROM barang WHERE id=?";
+                String query = "DELETE FROM barang WHERE Kd_barang=?";
                 PreparedStatement ps = connection.prepareStatement(query);
                 ps.setInt(1, object.getKd_barang());
                 if (ps.executeUpdate() != 0) {
@@ -88,11 +88,11 @@ public class BarangDaoImpl implements DaoService<Barang> {
                 String query
                         = " UPDATE barang SET  nama_brng=?, jumlah=?, harga_modal=?, harga = ? WHERE Kd_barang=?";
                 PreparedStatement ps = connection.prepareStatement(query);
-                ps.setInt(1, object.getKd_barang());
-                ps.setString(2, object.getNama_brng());
-                ps.setInt(3, object.getJumlah());
-                ps.setInt(4, object.getHarga_modal());
-                ps.setInt(5, object.getHarga());
+                ps.setString(1, object.getNama_brng());
+                ps.setInt(2, object.getJumlah());
+                ps.setInt(3, object.getHarga_modal());
+                ps.setInt(4, object.getHarga());
+                ps.setInt(5, object.getKd_barang());
 
                 if (ps.executeUpdate() != 0) {
                     connection.commit();
@@ -128,7 +128,8 @@ public class BarangDaoImpl implements DaoService<Barang> {
                 }
             }
         } catch (ClassNotFoundException | SQLException ex) {
-            System.out.println(ex);
+            Logger.getLogger(UserDaoImpl.class.getName()).
+                    log(Level.SEVERE, null, ex);
         }
         return barangs;
     }

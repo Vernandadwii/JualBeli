@@ -71,14 +71,14 @@ public class LoginController implements Initializable {
     @FXML
     private void btnLoginOnAction(ActionEvent event) throws IOException {
         User user = new User();
-        user.setId_user(Integer.valueOf(txtIdUser.getText()));
+        user.setIdUser(Integer.valueOf(txtIdUser.getText()));
         user.setPassword(txtPassword.getText());
         if (getUserDao().getData(user) != null) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setContentText("Login berhasil");
             alert.showAndWait();
 
-            if (getUserDao().getData(user).getRole_idRole().getIdRole() == 1) {
+            if (getUserDao().getData(user).getRole().getIdRole() == 1) {
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(MainApp.class.getResource("view/Menu.fxml"));
                 BorderPane pane = loader.load();
@@ -87,11 +87,11 @@ public class LoginController implements Initializable {
                 seconstaStage.setScene(scene);
                 seconstaStage.setTitle("Menu Owner");
                 seconstaStage.show();
-            } else if (getUserDao().getData(user).getRole_idRole().getIdRole()
+            } else if (getUserDao().getData(user).getRole().getIdRole()
                     == 2) {
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(MainApp.class.
-                        getResource("view/Laporan.fxml"));
+                        getResource("view/Transaksi.fxml"));
                 BorderPane pane = loader.load();
                 Scene scene = new Scene(pane);
                 Stage seconstaStage = new Stage();
@@ -118,7 +118,4 @@ public class LoginController implements Initializable {
         return users;
     }
 
-    private void getMenuController() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 }

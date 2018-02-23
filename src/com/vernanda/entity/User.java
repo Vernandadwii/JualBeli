@@ -18,60 +18,36 @@ import javafx.beans.property.StringProperty;
  */
 public class User {
 
-    private final IntegerProperty Id_user = new SimpleIntegerProperty();
-
-    public int getId_user() {
-        return Id_user.get();
-    }
-
-    public void setId_user(int value) {
-        Id_user.set(value);
-    }
-
-    public IntegerProperty Id_userProperty() {
-        return Id_user;
-    }
-    private final IntegerProperty j_kelamin = new SimpleIntegerProperty();
-
-    public int getJ_kelamin() {
-        return j_kelamin.get();
-    }
-
-    public void setJ_kelamin(int value) {
-        j_kelamin.set(value);
-    }
-
-    public IntegerProperty j_kelaminProperty() {
-        return j_kelamin;
-    }
-    private final StringProperty alamat = new SimpleStringProperty();
-
-    public String getAlamat() {
-        return alamat.get();
-    }
-
-    public void setAlamat(String value) {
-        alamat.set(value);
-    }
-
-    public StringProperty alamatProperty() {
-        return alamat;
-    }
-    private final ObjectProperty<Role> Role_idRole
-            = new SimpleObjectProperty<>();
-
-    public Role getRole_idRole() {
-        return Role_idRole.get();
-    }
-
-    public void setRole_idRole(Role value) {
-        Role_idRole.set(value);
-    }
-
-    public ObjectProperty Role_idRoleProperty() {
-        return Role_idRole;
-    }
+    private final IntegerProperty idUser = new SimpleIntegerProperty();
+    private final StringProperty nama = new SimpleStringProperty();
     private final StringProperty password = new SimpleStringProperty();
+    private final StringProperty alamat = new SimpleStringProperty();
+    private final IntegerProperty jKelamin = new SimpleIntegerProperty();
+    private final ObjectProperty<Role> role = new SimpleObjectProperty<>();
+
+    public int getIdUser() {
+        return idUser.get();
+    }
+
+    public void setIdUser(int value) {
+        idUser.set(value);
+    }
+
+    public IntegerProperty idUserProperty() {
+        return idUser;
+    }
+
+    public String getNama() {
+        return nama.get();
+    }
+
+    public void setNama(String value) {
+        nama.set(value);
+    }
+
+    public StringProperty namaProperty() {
+        return nama;
+    }
 
     public String getPassword() {
         return password.get();
@@ -85,64 +61,40 @@ public class User {
         return password;
     }
 
-//
-//    int Id_user;
-//    String nama;
-//    int username;
-//    String password;
-//    int Role_idRole;
-//
-//    public int getId_user() {
-//        return Id_user;
-//    }
-//
-//    public String getNama() {
-//        return nama;
-//    }
-//
-//    public int getUsername() {
-//        return username;
-//    }
-//
-//    public String getPassword() {
-//        return password;
-//    }
-//
-//    public int getRole_idRole() {
-//        return Role_idRole;
-//    }
-//
-//    public void setId_user(int Id_user) {
-//        this.Id_user = Id_user;
-//    }
-//
-//    public void setNama(String nama) {
-//        this.nama = nama;
-//    }
-//
-//    public void setUsername(int username) {
-//        this.username = username;
-//    }
-//
-//    public void setPassword(String password) {
-//        this.password = password;
-//    }
-//
-//    public void setRole_idRole(int Role_idRole) {
-//        this.Role_idRole = Role_idRole;
-//    }
-    private final StringProperty nama = new SimpleStringProperty();
-
-    public String getNama() {
-        return nama.get();
+    public String getAlamat() {
+        return alamat.get();
     }
 
-    public void setNama(String value) {
-        nama.set(value);
+    public void setAlamat(String value) {
+        alamat.set(value);
     }
 
-    public StringProperty namaProperty() {
-        return nama;
+    public StringProperty alamatProperty() {
+        return alamat;
+    }
+
+    public int getjKelamin() {
+        return jKelamin.get();
+    }
+
+    public void setjKelamin(int value) {
+        jKelamin.set(value);
+    }
+
+    public IntegerProperty jKelaminProperty() {
+        return jKelamin;
+    }
+
+    public Role getRole() {
+        return role.get();
+    }
+
+    public void setRole(Role value) {
+        role.set(value);
+    }
+
+    public ObjectProperty roleProperty() {
+        return role;
     }
 
 }

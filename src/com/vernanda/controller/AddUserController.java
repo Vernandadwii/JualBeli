@@ -6,17 +6,19 @@
 package com.vernanda.controller;
 
 import com.vernanda.dao.UserDaoImpl;
+import com.vernanda.entity.Role;
 import com.vernanda.entity.User;
 import com.vernanda.utility.Utility;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
@@ -24,6 +26,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
+import javafx.util.Callback;
 
 /**
  * FXML Controller class
@@ -44,8 +48,7 @@ public class AddUserController implements Initializable {
     private Button btnHapus;
     @FXML
     private Button btnBack;
-    private ObservableList<User> Users;
-    private UserDaoImpl userDao;
+
     @FXML
     private TableView<User> tabelAddUser;
     @FXML
@@ -57,7 +60,7 @@ public class AddUserController implements Initializable {
     @FXML
     private TableColumn<User, String> nama;
     @FXML
-    private TableColumn<User, Integer> j_kelamin;
+    private TableColumn<User, String> j_kelamin;
     @FXML
     private TableColumn<User, String> alamat;
     private MenuController menuController;
@@ -66,86 +69,130 @@ public class AddUserController implements Initializable {
     @FXML
     private ToggleGroup jeniskel;
     public User selectedUser;
+    @FXML
+    private TableColumn<User, String> satus;
+    @FXML
+    private ComboBox<Role> cmbStatus;
+
+    private Stage userStage;
+    private UserDaoImpl userDao;
+
+    public Role selectedRole;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        tabelAddUser.setItems(getUser());
-        id_user.setCellValueFactory(p -> p.getValue().Id_userProperty().
+
+        id_user.setCellValueFactory(p -> p.getValue().idUserProperty().
                 asObject());
         nama.setCellValueFactory(p -> p.getValue().namaProperty());
         j_kelamin.
-                setCellValueFactory(p -> p.getValue().j_kelaminProperty().
-                        asObject());
+                setCellValueFactory(
+                        new Callback<TableColumn.CellDataFeatures<User, String>, ObservableValue<String>>() {
+                    @Override
+                    public ObservableValue<String> call(
+                            TableColumn.CellDataFeatures<User, String> param) {
+                        User u = (User) param.getValue();
+                        if (u.getjKelamin() == 1) {
+                            return new SimpleStringProperty("Perempuan");
+                        } else {
+                            return new SimpleStringProperty("Laki-laki");
+                        }
+                    }
+                });
         alamat.
                 setCellValueFactory(p -> p.getValue().alamatProperty());
+        satus.
+                setCellValueFactory((
+                        TableColumn.CellDataFeatures<User, String> param)
+                        -> new SimpleStringProperty(param.getValue().getRole().
+                                getKeterangan()));
     }
 
-    public ObservableList<User> getUser() {
-        if (Users == null) {
-            Users = FXCollections.observableArrayList();
-            Users.addAll(getUserDao().showAllData());
-        }
-        return Users;
-    }
+    public void setMenuController(MenuController menuController) {
+        this.menuController = menuController;
+        tabelAddUser.setItems(menuController.getUser());
 
-    public UserDaoImpl getUserDao() {
-        if (userDao == null) {
-            userDao = new UserDaoImpl();
-        }
-        return userDao;
-    }
-
-    public void setMainController(MenuController menuController) {
-
+        cmbStatus.setItems(menuController.getRoles());
     }
 
     @FXML
     private void btnTambahOnAction(ActionEvent event) {
-        Utility utility = new Utility();
-        if (!utility.isEmptyField(txtPassword, txtNama, txtAlamat)) {
+//        Utility utility = new Utility();
+        if (!Utility.isEmptyField(txtNama, txtPassword, txtAlamat)) {
             User user = new User();
-            user.setPassword(txtPassword.getText().trim());
+            Role role = new Role();
             user.setNama(txtNama.getText().trim());
-            user.setAlamat(txtAlamat.getText().trim());
-            if (jeniskel.getSelectedToggle().equals("perempuan")) {
-                user.setJ_kelamin(1);
-            } else if (jeniskel.getSelectedToggle().equals("laki")) {
-                user.setJ_kelamin(2);
-            }
+            user.setPassword(txtPassword.getText().trim());
 
-            if (getUserDao().addData(user) == 1) {
-                getUser().clear();
-                getUser().addAll(getUserDao().showAllData());
+//            StringProperty jenis = null;
+            if (perempuan.isSelected()) {
+                user.setjKelamin(1);
+//                jenis.setValue();
+            } else {
+                user.setjKelamin(2);
+//                jenis.setValue("L");
             }
-            txtPassword.clear();
-            txtNama.clear();
-            txtAlamat.clear();
-        } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Masih ada yang kosong");
-            alert.showAndWait();
+//            user.setJ_kelamin(jenis);
+            user.setAlamat(txtAlamat.getText().trim());
+            role.setIdRole(cmbStatus.getValue().getIdRole());
+            role.setKeterangan(cmbStatus.getValue().getKeterangan());
+            user.setRole(role);
+
+            if (txtPassword.getText().equals(txtPassword.getText())) {
+                if (menuController.getUserDao().addData(user) == 1) {
+                    menuController.getUser().clear();
+                    menuController.getUser().addAll(menuController.getUserDao().
+                            showAllData());
+
+                    tabelAddUser.refresh();
+
+                    txtNama.clear();
+                    txtPassword.clear();
+                    txtAlamat.clear();
+                    cmbStatus.setValue(null);
+                }
+
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setContentText("Pass tidak sama, isi lagi!");
+                alert.showAndWait();
+                txtPassword.clear();
+
+            }
         }
     }
 
     @FXML
     private void btnUbahOnAction(ActionEvent event) {
-        Utility utility = new Utility();
-        if (!utility.isEmptyField(txtPassword, txtNama, txtAlamat)) {
-            User user = new User();
-            user.setId_user(selectedUser.getId_user());
-            user.setNama(txtNama.getText().trim());
-            user.setPassword(txtPassword.getText().trim());
-            user.setAlamat(txtAlamat.getText().trim());
-            if (getUserDao().updateData(user) == 1) {
-                getUserDao().updateData(user);
-                getUser().clear();
-                getUser().addAll(getUserDao().showAllData());
+//        Utility utility = new Utility();
+        if (!Utility.isEmptyField(txtNama, txtPassword, txtAlamat)) {
+            selectedUser.setNama(txtNama.getText().trim());
+            selectedUser.setPassword(txtPassword.getText().trim());
+            if (perempuan.isSelected()) {
+                selectedUser.setjKelamin(1);
+//                jenis.setValue();
+            } else {
+                selectedUser.setjKelamin(2);
+//                jenis.setValue("L");
+            }
+            selectedUser.setAlamat(txtAlamat.getText().trim());
+            selectedUser.setRole(cmbStatus.getValue());
+
+            if (menuController.getUserDao().updateData(selectedUser) == 1) {
+                menuController.getUser().clear();
+                menuController.getUser().addAll(menuController.getUserDao().
+                        showAllData());
 
                 tabelAddUser.refresh();
             }
+            txtNama.clear();
+            txtPassword.clear();
+            txtAlamat.clear();
+
+            selectedUser = null;
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setContentText("Silahkan ketik ulang");
@@ -155,19 +202,33 @@ public class AddUserController implements Initializable {
 
     @FXML
     private void btnHapusOnAction(ActionEvent event) {
-        Utility utility = new Utility();
-        if (!utility.isEmptyField(txtPassword, txtNama, txtAlamat)) {
-            User user = new User();
-            user.setId_user(selectedUser.getId_user());
-            user.setNama(txtNama.getText().trim());
-            user.setPassword(txtPassword.getText().trim());
-            user.setAlamat(txtAlamat.getText().trim());
-            if (getUserDao().deleteData(user) == 1) {
-                getUserDao().deleteData(user);
-                getUser().clear();
-                getUser().addAll(getUserDao().showAllData());
+//        Utility utility = new Utility();
+        if (!Utility.isEmptyField(txtNama, txtPassword, txtAlamat)) {
+//            User user = new User();
+            selectedUser.setNama(txtNama.getText().trim());
+            selectedUser.setPassword(txtPassword.getText().trim());
+
+            if (perempuan.isSelected()) {
+                selectedUser.setjKelamin(1);
+//                jenis.setValue();
+            } else {
+                selectedUser.setjKelamin(2);
+//                jenis.setValue("L");
+            }
+            selectedUser.setAlamat(txtAlamat.getText().trim());
+            selectedUser.setRole(cmbStatus.getValue());
+
+            if (menuController.getUserDao().deleteData(selectedUser) == 1) {
+                menuController.getUser().clear();
+                menuController.getUser().addAll(menuController.getUserDao().
+                        showAllData());
 
                 tabelAddUser.refresh();
+
+                txtNama.clear();
+                txtPassword.clear();
+                txtAlamat.clear();
+                cmbStatus.setValue(null);
             }
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -191,7 +252,7 @@ public class AddUserController implements Initializable {
             txtAlamat.setText(String.valueOf(selectedUser.getAlamat()));
 
             System.out.println(selectedUser.getNama());
-
+            cmbStatus.setValue(selectedUser.getRole());
         }
     }
 

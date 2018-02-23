@@ -31,12 +31,13 @@ public class TransaksiDaoImpl implements DaoService<Transaksi> {
             try (Connection connection = Koneksi.createConnection()) {
                 connection.setAutoCommit(false);
                 String query
-                        = "INSERT INTO Transaksi(no_transaksi,harga,User_Id_user)"
-                        + "VALUES (?,?,?)";
+                        = "INSERT INTO Transaksi(no_transaksi,tgl_transaksi,pembayaran,User_Id_user)"
+                        + "VALUES (?,?,?,?)";
                 PreparedStatement ps = connection.prepareStatement(query);
                 ps.setString(1, object.getNo_transaksi());
-                ps.setDouble(3, object.getHarga());
-                ps.setInt(5, object.getUser_Id_user());
+                ps.setTimestamp(2, object.getTgl_transaksi());
+                ps.setInt(3, object.getPembayaran());
+                ps.setInt(4, object.getUser_Id_user());
                 if (ps.executeUpdate() != 0) {
                     connection.commit();
                     result = 1;
@@ -63,6 +64,7 @@ public class TransaksiDaoImpl implements DaoService<Transaksi> {
     @Override
     public List<Transaksi> showAllData() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
     }
 
     @Override
@@ -75,13 +77,13 @@ public class TransaksiDaoImpl implements DaoService<Transaksi> {
             PreparedStatement ps = connection.prepareStatement(querry);
             ps.setString(1, id.getNo_transaksi());
             ps.setTimestamp(2, t);
-            ps.setDouble(3, id.getHarga());
+            ps.setDouble(3, id.getPembayaran());
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 Transaksi transaksi = new Transaksi();
                 transaksi.setNo_transaksi(rs.getString("t.no_transaksi"));
 
-                transaksi.setHarga(rs.getInt("t.t.harga"));
+                transaksi.setPembayaran(rs.getInt("t.t.harga"));
 
                 // user.setRole_idRole(rs.get);
                 return transaksi;

@@ -34,14 +34,23 @@ public class UserDaoImpl implements DaoService<User> {
             try (Connection connection = Koneksi.createConnection()) {
                 connection.setAutoCommit(false);
                 String query
-                        = "INSERT INTO User(nama,password,j_kelamin,alamat,Role_idRole) VALUES (?,?,?,?,?)";
+                        = "INSERT INTO User(id_user,nama,password,j_kelamin,alamat,role_idRole) VALUES (?,?,?,?,?,?)";
                 PreparedStatement ps = connection.prepareStatement(query);
-                ps.setString(1, object.getPassword());
+                ps.setInt(1, object.getIdUser());
                 ps.setString(2, object.getNama());
-                ps.setInt(3, object.getJ_kelamin());
-                ps.setString(4, object.getAlamat());
-
-                ps.setInt(5, object.getRole_idRole().getIdRole());
+                ps.setString(3, object.getPassword());
+//                StringProperty p = null;
+//                StringProperty l = null;
+//                p.setValue("P");
+//                l.setValue("L");
+//                if (object.getJ_kelamin().equals(p)) {
+//                    ps.setInt(3, 1);
+//                } else {
+//                    ps.setInt(3, 2);
+//                }
+                ps.setInt(4, object.getjKelamin());
+                ps.setString(5, object.getAlamat());
+                ps.setInt(6, object.getRole().getIdRole());
                 if (ps.executeUpdate() != 0) {
                     connection.commit();
                     result = 1;
@@ -63,7 +72,7 @@ public class UserDaoImpl implements DaoService<User> {
                 connection.setAutoCommit(false);
                 String query = "DELETE FROM user WHERE Id_user=?";
                 PreparedStatement ps = connection.prepareStatement(query);
-                ps.setInt(1, object.getId_user());
+                ps.setInt(1, object.getIdUser());
                 if (ps.executeUpdate() != 0) {
                     connection.commit();
                     result = 1;
@@ -85,13 +94,23 @@ public class UserDaoImpl implements DaoService<User> {
             try (Connection connection = Koneksi.createConnection()) {
                 connection.setAutoCommit(false);
                 String query
-                        = "UPDATE user SET nama=?,password=?,j_kelamin=?,alamat=? WHERE Id_user=?";
+                        = "UPDATE user SET nama=?,password=?,j_kelamin=?,alamat=? role_idRole=? WHERE id_user=?";
                 PreparedStatement ps = connection.prepareStatement(query);
+                ps.setInt(6, object.getIdUser());
                 ps.setString(1, object.getPassword());
                 ps.setString(2, object.getNama());
-                ps.setInt(3, object.getJ_kelamin());
+//                StringProperty p = null;
+//                StringProperty l = null;
+//                p.setValue("P");
+//                l.setValue("L");
+//                if (object.getJ_kelamin().equals(p)) {
+//                    ps.setInt(3, 1);
+//                } else {
+//                    ps.setInt(3, 2);
+//                }
+                ps.setInt(3, object.getjKelamin());
                 ps.setString(4, object.getAlamat());
-                ps.setInt(5, object.getRole_idRole().getIdRole());
+                ps.setInt(5, object.getRole().getIdRole());
                 if (ps.executeUpdate() != 0) {
                     connection.commit();
                     result = 1;
@@ -111,17 +130,27 @@ public class UserDaoImpl implements DaoService<User> {
         try {
             try (Connection connection = Koneksi.createConnection()) {
                 String query
-                        = "SELECT Id_user,nama,password,j_kelamin, alamat FROM user u JOIN role r  where u.Role_idRole = r.idRole";
+                        = "SELECT u.id_user,u.password,u.nama,u.j_kelamin, u.alamat, u.role_idRole, r.Keterangan FROM user u JOIN role r WHERE u.role_idRole = r.idRole";
                 PreparedStatement ps = connection.prepareStatement(query);
                 ResultSet rs = ps.executeQuery();
                 while (rs.next()) {
                     User user = new User();
-                    user.setId_user(rs.getInt("Id_user"));
+                    user.setIdUser(rs.getInt("id_user"));
                     user.setNama(rs.getString("nama"));
                     user.setPassword(rs.getString("password"));
-                    user.setJ_kelamin(rs.getInt("j_kelamin"));
+//                    StringProperty jenis = null;
+//                    if (rs.getInt("j_kelamin") == 1) {
+                    user.setjKelamin(rs.getInt("j_kelamin"));
+//                        setValue("P");
+//                    } else {
+//                        jenis.setValue("L");
+//                    }
+//                    user.setJ_kelamin(jenis);
                     user.setAlamat(rs.getString("alamat"));
-
+                    Role role = new Role();
+                    role.setIdRole(rs.getInt("u.Role_idRole"));
+                    role.setKeterangan(rs.getString("r.Keterangan"));
+                    user.setRole(role);
                     users.add(user);
                 }
             }
@@ -137,20 +166,20 @@ public class UserDaoImpl implements DaoService<User> {
         try (Connection connection = Koneksi.createConnection()) {
             connection.setAutoCommit(false);
             String querry
-                    = "SELECT Id_user,password,idRole FROM User u join Role r on u.Role_idRole=r.idRole WHERE u.Id_user=? AND u.password=?";
+                    = "SELECT Id_user,password,Role_idRole FROM User u join Role r on u.Role_idRole=r.idRole WHERE u.Id_user=? AND u.password=?";
             PreparedStatement ps = connection.prepareStatement(querry);
-            ps.setInt(1, id.getId_user());
+            ps.setInt(1, id.getIdUser());
             ps.setString(2, id.getPassword());
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 User user = new User();
-                user.setId_user(rs.getInt("Id_user"));
-                user.setPassword(rs.getString("password"));
+                user.setIdUser(rs.getInt("u.Id_user"));
+                user.setPassword(rs.getString("u.password"));
                 // user.setRole_idRole(rs.get);
                 Role userRole = new Role();
-                userRole.setIdRole(rs.getInt("idRole"));
+                userRole.setIdRole(rs.getInt("u.Role_idRole"));
 
-                user.setRole_idRole(userRole);
+                user.setRole(userRole);
                 return user;
             }
         } catch (ClassNotFoundException | SQLException ex) {

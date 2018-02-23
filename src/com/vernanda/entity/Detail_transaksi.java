@@ -93,17 +93,13 @@ public class Detail_transaksi {
 //    public void setSaling_price(int saling_price) {
 //        this.saling_price = saling_price;
 //    }
-    private final StringProperty barang_Kd_barang = new SimpleStringProperty();
+    private final Barang barang_Kd_barang = new Barang();
 
-    public String getBarang_Kd_barang() {
-        return barang_Kd_barang.get();
+    public Barang getBarang_Kd_barang() {
+        return barang_Kd_barang;
     }
 
-    public void setBarang_Kd_barang(String value) {
-        barang_Kd_barang.set(value);
-    }
-
-    public StringProperty barang_Kd_barangProperty() {
+    public Barang barang_Kd_barangProperty() {
         return barang_Kd_barang;
     }
 

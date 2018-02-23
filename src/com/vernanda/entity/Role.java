@@ -62,4 +62,9 @@ public class Role {
         return keterangan;
     }
 
+    @Override
+    public String toString() {
+        return getKeterangan();
+    }
+
 }

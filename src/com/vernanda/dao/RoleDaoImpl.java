@@ -16,6 +16,8 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 /**
  *
@@ -61,7 +63,26 @@ public class RoleDaoImpl implements DaoService<Role> {
 
     @Override
     public List<Role> showAllData() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ObservableList<Role> roles = FXCollections.observableArrayList();
+        try {
+            try (Connection connection = Koneksi.createConnection()) {
+                String query
+                        = "SELECT * FROM role";
+                PreparedStatement ps = connection.prepareStatement(query);
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()) {
+                    Role role = new Role();
+                    role.setIdRole(rs.getInt("idRole"));
+                    role.setKeterangan(rs.getString("Keterangan"));
+                    roles.add(role);
+                }
+            }
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(UserDaoImpl.class.getName()).
+                    log(Level.SEVERE, null, ex);
+        }
+        return roles;
+
     }
 
     @Override

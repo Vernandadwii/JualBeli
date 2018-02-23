@@ -35,7 +35,7 @@ public class Detail_transaksiDaoImpl implements DaoService<Detail_transaksi> {
                         + "VALUES (?,?,?,?)";
                 PreparedStatement ps = connection.prepareStatement(query);
                 ps.setString(1, object.getTransaksi_No_transaksi());
-                ps.setString(2, object.getBarang_Kd_barang());
+//                ps.setString(2, object.getBarang_Kd_barang());
                 ps.setInt(3, object.getJumlah());
                 ps.setDouble(4, object.getSaling_price());
                 if (ps.executeUpdate() != 0) {
@@ -74,7 +74,7 @@ public class Detail_transaksiDaoImpl implements DaoService<Detail_transaksi> {
                     = "SELECT t.transaksi_no_transaksi,b.barang_Kd_barang,d.jumlah,d.saling_price FROM  t join Role r on u.Role_idRole=r.Role_idRole";
             PreparedStatement ps = connection.prepareStatement(querry);
             ps.setString(1, id.getTransaksi_No_transaksi());
-            ps.setString(2, id.getBarang_Kd_barang());
+//            ps.setString(2, id.getBarang_Kd_barang());
             ps.setInt(3, id.getJumlah());
             ps.setInt(4, id.getSaling_price());
             ResultSet rs = ps.executeQuery();
@@ -82,8 +82,9 @@ public class Detail_transaksiDaoImpl implements DaoService<Detail_transaksi> {
                 Detail_transaksi detailtrans = new Detail_transaksi();
                 detailtrans.setTransaksi_No_transaksi(rs.getString(
                         "t.transaksi_no_transaksi"));
-                detailtrans.setBarang_Kd_barang(rs.getString(
-                        "b.barang_Kd_barang"));
+////                //                detailtrans.setBarang_Kd_barang(rs.getString(
+////                "b.barang_Kd_barang"
+//                ));
                 detailtrans.setJumlah(rs.getInt("d.jumlah"));
                 detailtrans.setSaling_price(rs.getInt("d.saling_price"));
 

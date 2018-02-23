@@ -5,8 +5,11 @@
  */
 package com.vernanda.entity;
 
+import java.sql.Timestamp;
 import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
@@ -28,6 +31,20 @@ public class Transaksi {
 
     public StringProperty no_transaksiProperty() {
         return no_transaksi;
+    }
+    private final ObjectProperty<Timestamp> tgl_transaksi
+            = new SimpleObjectProperty<>();
+
+    public Timestamp getTgl_transaksi() {
+        return tgl_transaksi.get();
+    }
+
+    public void setTgl_transaksi(Timestamp value) {
+        tgl_transaksi.set(value);
+    }
+
+    public ObjectProperty tgl_transaksiProperty() {
+        return tgl_transaksi;
     }
     private final IntegerProperty User_Id_user = new SimpleIntegerProperty();
 
@@ -80,17 +97,30 @@ public class Transaksi {
 //        this.User_Id_user = User_Id_user;
 //    }
     private final IntegerProperty harga = new SimpleIntegerProperty();
+    private final IntegerProperty pembayaran = new SimpleIntegerProperty();
 
-    public int getHarga() {
-        return harga.get();
+    public int getPembayaran() {
+        return pembayaran.get();
     }
 
-    public void setHarga(int value) {
-        harga.set(value);
+    public void setPembayaran(int value) {
+        pembayaran.set(value);
     }
 
-    public IntegerProperty hargaProperty() {
-        return harga;
+    public IntegerProperty pembayaranProperty() {
+        return pembayaran;
+    }
+
+    public Transaksi() {
+    }
+
+    public Transaksi(String no_transaksi, Timestamp tgl_transaksi,
+            int pembayaran, int User_Id_user) {
+        this.setNo_transaksi(no_transaksi);
+        this.setTgl_transaksi(tgl_transaksi);
+        this.setPembayaran(pembayaran);
+        this.setUser_Id_user(User_Id_user);
+
     }
 
 }

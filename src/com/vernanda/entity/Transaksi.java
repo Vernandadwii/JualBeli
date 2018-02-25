@@ -21,6 +21,7 @@ public class Transaksi {
 
     private final StringProperty no_transaksi = new SimpleStringProperty();
 
+    //noTransaksi
     public String getNo_transaksi() {
         return no_transaksi.get();
     }
@@ -32,6 +33,8 @@ public class Transaksi {
     public StringProperty no_transaksiProperty() {
         return no_transaksi;
     }
+
+    //tglTransaksi
     private final ObjectProperty<Timestamp> tgl_transaksi
             = new SimpleObjectProperty<>();
 
@@ -46,57 +49,37 @@ public class Transaksi {
     public ObjectProperty tgl_transaksiProperty() {
         return tgl_transaksi;
     }
-    private final IntegerProperty User_Id_user = new SimpleIntegerProperty();
 
-    public int getUser_Id_user() {
+    //User_id_user
+    private final ObjectProperty<User> User_Id_user
+            = new SimpleObjectProperty<>();
+
+    public User getUser_Id_user() {
         return User_Id_user.get();
     }
 
-    public void setUser_Id_user(int value) {
+    public void setUser_Id_user(User value) {
         User_Id_user.set(value);
     }
 
-    public IntegerProperty User_Id_userProperty() {
+    public ObjectProperty User_Id_userProperty() {
         return User_Id_user;
     }
 
-//    String no_transaksi;
-//    Timestamp tgl_transaksi;
-//    int harga;
-//    int User_Id_user;
-//
-//    public String getNo_transaksi() {
-//        return no_transaksi;
-//    }
-//
-//    public Timestamp getTgl_transaksi() {
-//        return tgl_transaksi;
-//    }
-//
-//    public int getHarga() {
-//        return harga;
-//    }
-//
-//    public int getUser_Id_user() {
-//        return User_Id_user;
-//    }
-//
-//    public void setNo_transaksi(String No_transaksi) {
-//        this.no_transaksi = No_transaksi;
-//    }
-//
-//    public void setTgl_transaksi(Timestamp tgl_transaksi) {
-//        this.tgl_transaksi = tgl_transaksi;
-//    }
-//
-//    public void setHarga(int harga) {
-//        this.harga = harga;
-//    }
-//
-//    public void setUser_Id_user(int User_Id_user) {
-//        this.User_Id_user = User_Id_user;
-//    }
     private final IntegerProperty harga = new SimpleIntegerProperty();
+
+    public int getHarga() {
+        return harga.get();
+    }
+
+    public void setHarga(int value) {
+        harga.set(value);
+    }
+
+    public IntegerProperty hargaProperty() {
+        return harga;
+    }
+
     private final IntegerProperty pembayaran = new SimpleIntegerProperty();
 
     public int getPembayaran() {
@@ -110,17 +93,16 @@ public class Transaksi {
     public IntegerProperty pembayaranProperty() {
         return pembayaran;
     }
+//
+//    public Transaksi() {
+//    }
 
-    public Transaksi() {
-    }
-
-    public Transaksi(String no_transaksi, Timestamp tgl_transaksi,
-            int pembayaran, int User_Id_user) {
-        this.setNo_transaksi(no_transaksi);
-        this.setTgl_transaksi(tgl_transaksi);
-        this.setPembayaran(pembayaran);
-        this.setUser_Id_user(User_Id_user);
-
-    }
-
+//    public Transaksi(String no_transaksi, Timestamp tgl_transaksi,
+//            int pembayaran, int User_Id_user) {
+//        this.setNo_transaksi(no_transaksi);
+//        this.setTgl_transaksi(tgl_transaksi);
+//        this.setPembayaran(pembayaran);
+//        this.setUser_Id_user(User_Id_user);
+//
+//    }
 }

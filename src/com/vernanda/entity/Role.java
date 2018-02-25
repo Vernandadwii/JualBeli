@@ -17,6 +17,7 @@ import javafx.beans.property.StringProperty;
 public class Role {
 
     private final IntegerProperty idRole = new SimpleIntegerProperty();
+    private final StringProperty keterangan = new SimpleStringProperty();
 
     public int getIdRole() {
         return idRole.get();
@@ -29,26 +30,6 @@ public class Role {
     public IntegerProperty idRoleProperty() {
         return idRole;
     }
-
-//    int idRole;
-//    String keterangan;
-//
-//    public int getIdRole() {
-//        return idRole;
-//    }
-//
-//    public String getKeterangan() {
-//        return keterangan;
-//    }
-//
-//    public void setIdRole(int idRole) {
-//        this.idRole = idRole;
-//    }
-//
-//    public void setKeterangan(String keterangan) {
-//        this.keterangan = keterangan;
-//    }
-    private final StringProperty keterangan = new SimpleStringProperty();
 
     public String getKeterangan() {
         return keterangan.get();

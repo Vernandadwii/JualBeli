@@ -25,6 +25,14 @@ public class User {
     private final IntegerProperty jKelamin = new SimpleIntegerProperty();
     private final ObjectProperty<Role> role = new SimpleObjectProperty<>();
 
+    public User(String idUser) {
+        this.setIdUser(Integer.valueOf(idUser));
+    }
+
+    public User() {
+
+    }
+
     public int getIdUser() {
         return idUser.get();
     }
@@ -37,6 +45,7 @@ public class User {
         return idUser;
     }
 
+    //nama
     public String getNama() {
         return nama.get();
     }

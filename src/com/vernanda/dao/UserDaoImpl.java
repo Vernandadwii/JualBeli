@@ -166,7 +166,7 @@ public class UserDaoImpl implements DaoService<User> {
         try (Connection connection = Koneksi.createConnection()) {
             connection.setAutoCommit(false);
             String querry
-                    = "SELECT Id_user,password,Role_idRole FROM User u join Role r on u.Role_idRole=r.idRole WHERE u.Id_user=? AND u.password=?";
+                    = "SELECT Id_user,nama,password,Role_idRole FROM User u join Role r on u.Role_idRole=r.idRole WHERE u.Id_user=? AND u.password=?";
             PreparedStatement ps = connection.prepareStatement(querry);
             ps.setInt(1, id.getIdUser());
             ps.setString(2, id.getPassword());
@@ -174,6 +174,7 @@ public class UserDaoImpl implements DaoService<User> {
             if (rs.next()) {
                 User user = new User();
                 user.setIdUser(rs.getInt("u.Id_user"));
+                user.setNama(rs.getString("u.nama"));
                 user.setPassword(rs.getString("u.password"));
                 // user.setRole_idRole(rs.get);
                 Role userRole = new Role();

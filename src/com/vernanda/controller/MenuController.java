@@ -7,9 +7,7 @@ package com.vernanda.controller;
 
 import com.vernanda.MainApp;
 import com.vernanda.dao.RoleDaoImpl;
-import com.vernanda.dao.TransaksiDaoImpl;
 import com.vernanda.dao.UserDaoImpl;
-import com.vernanda.entity.Detail_transaksi;
 import com.vernanda.entity.Role;
 import com.vernanda.entity.User;
 import com.vernanda.utility.Koneksi;
@@ -192,15 +190,9 @@ public class MenuController implements Initializable {
         return roleDao;
     }
 
-    private TransaksiDaoImpl transaksiDao;
+    private User selectedUser;
 
-    private ObservableList<Detail_transaksi> transaksis;
-
-    public ObservableList<Detail_transaksi> getTransaksis() {
-        if (transaksis == null) {
-            transaksis = FXCollections.observableArrayList();
-        }
-        return transaksis;
+    public User getSelectedUser() {
+        return getSelectedUser();
     }
-
 }

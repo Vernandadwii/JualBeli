@@ -14,34 +14,25 @@ import javafx.beans.property.StringProperty;
  *
  * @author AsusPC
  */
-public class Barang {
+public class Table {
 
     private final IntegerProperty Kd_barang = new SimpleIntegerProperty();
-    private final IntegerProperty harga = new SimpleIntegerProperty();
-    private final IntegerProperty harga_modal = new SimpleIntegerProperty();
-    private final IntegerProperty jumlah = new SimpleIntegerProperty();
     private final StringProperty nama_brng = new SimpleStringProperty();
+    private final IntegerProperty saling_price = new SimpleIntegerProperty();
+    private final IntegerProperty jumlah = new SimpleIntegerProperty();
 
-    public Barang(int Kd_barang) {
+    public Table() {
+
+    }
+
+    public Table(int Kd_barang, String nama_brng, int saling_price, int jumlah) {
         this.setKd_barang(Kd_barang);
+        this.setNama_brng(nama_brng);
+        this.setSaling_price(saling_price);
+        this.setJumlah(jumlah);
     }
 
-    public Barang() {
-
-    }
-
-    public int getJumlah() {
-        return jumlah.get();
-    }
-
-    public void setJumlah(int value) {
-        jumlah.set(value);
-    }
-
-    public IntegerProperty jumlahProperty() {
-        return jumlah;
-    }
-
+    //Kd_barang
     public int getKd_barang() {
         return Kd_barang.get();
     }
@@ -54,6 +45,7 @@ public class Barang {
         return Kd_barang;
     }
 
+    //nama_brng
     public String getNama_brng() {
         return nama_brng.get();
     }
@@ -66,32 +58,35 @@ public class Barang {
         return nama_brng;
     }
 
-    public int getHarga() {
-        return harga.get();
+    //saling_price
+    public int getSaling_price() {
+        return saling_price.get();
     }
 
-    public void setHarga(int value) {
-        harga.set(value);
+    public void setSaling_price(int value) {
+        saling_price.set(value);
     }
 
-    public IntegerProperty hargaProperty() {
-        return harga;
+    public IntegerProperty saling_priceProperty() {
+        return saling_price;
     }
 
-    public int getHarga_modal() {
-        return harga_modal.get();
+    //jumlah
+    public int getJumlah() {
+        return jumlah.get();
     }
 
-    public void setHarga_modal(int value) {
-        harga_modal.set(value);
+    public void setJumlah(int value) {
+        jumlah.set(value);
     }
 
-    public IntegerProperty harga_modalProperty() {
-        return harga_modal;
+    public IntegerProperty jumlahProperty() {
+        return jumlah;
     }
 
     @Override
     public String toString() {
         return String.valueOf(getKd_barang()) + "-" + getNama_brng();
     }
+
 }

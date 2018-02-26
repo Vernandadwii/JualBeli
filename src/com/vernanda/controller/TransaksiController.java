@@ -71,6 +71,7 @@ public class TransaksiController implements Initializable {
     private Button btnAddTable;
 
     private MenuController menuController;
+    private LoginController loginController;
     private ObservableList<Barang> barangs;
     private BarangDaoImpl barangDao;
     @FXML
@@ -143,9 +144,16 @@ public class TransaksiController implements Initializable {
     public Transaksi getTransaksi() {
         if (transaksi == null) {
             transaksi = new Transaksi();
+            transaksi.setNo_transaksi(
+                    getTransaksiDao().
+                    showAllData().size() + 1);
             transaksi.setPembayaran(0);
         }
         return transaksi;
+    }
+
+    public String get3Left(String angka, int bnyk) {
+        return angka.substring(angka.length() - bnyk, angka.length());
     }
 
     public void setMenuController(MenuController menuController) {
@@ -224,8 +232,8 @@ public class TransaksiController implements Initializable {
                 if (Integer.valueOf(txtPembayaran.getText()) >= Integer.valueOf(
                         txtTotalharga.getText())) {
 
-                    getTransaksi().setNo_transaksi(txtNoTrans.
-                            getText().trim());
+                    getTransaksi().setNo_transaksi(Integer.valueOf(txtNoTrans.
+                            getText().trim()));
                     getTransaksi().setPembayaran(Integer.valueOf(
                             txtTotalharga.getText().trim()));
                     getTransaksi().setUser_Id_user(new User(
@@ -299,17 +307,15 @@ public class TransaksiController implements Initializable {
     //AddtoCart
     @FXML
     private void btnAddTableOnAction(ActionEvent event) {
-        if (!Utility.isEmptyField(txtNoTrans, txtTglTrans, txtNamaKasir,
-                txtId_Kasir,
-                txtJumlah) && cmbKodeBrng != null) {
+        if (!Utility.isEmptyField(txtJumlah) && cmbKodeBrng != null) {
             if (Utility.isNumber(txtJumlah.getText())) {
                 Table tab = new Table();
                 tab.setKd_barang(cmbKodeBrng.getValue().getKd_barang());
                 tab.setNama_brng(cmbKodeBrng.getValue().getNama_brng());
                 tab.setJumlah(Integer.valueOf(txtJumlah.getText().trim()));
                 tab.setSaling_price(Integer.valueOf(cmbKodeBrng.getValue().
-                        getHarga_modal()));
-
+                        getHarga()));
+                System.out.println(cmbKodeBrng.getValue());
                 boolean ganda = false;
 
                 for (Table t : tables) {
@@ -379,6 +385,16 @@ public class TransaksiController implements Initializable {
 
     private void setTransaksi(Transaksi transaksi) {
         this.transaksi = transaksi;
+    }
+
+    void setLoginController(LoginController loginController) {
+        this.loginController = loginController;
+        txtId_Kasir.setText(String.
+                valueOf(loginController.getUser().getIdUser()));
+        txtNamaKasir.setText(String.
+                valueOf(loginController.getUser().getNama()));
+
+        txtNoTrans.setText(String.valueOf(getTransaksi().getNo_transaksi()));
     }
 
 }

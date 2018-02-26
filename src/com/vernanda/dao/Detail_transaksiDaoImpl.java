@@ -32,7 +32,7 @@ public class Detail_transaksiDaoImpl implements DaoService<Detail_transaksi> {
                         = "INSERT INTO Detail_transaksi(transaksi_no_transaksi,barang_Kd_barang,jumlah,saling_price)"
                         + "VALUES (?,?,?,?)";
                 PreparedStatement ps = connection.prepareStatement(query);
-                ps.setString(1, object.getTransaksi_No_transaksi().
+                ps.setInt(1, object.getTransaksi_No_transaksi().
                         getNo_transaksi());
                 ps.setInt(2, object.getBarang_Kd_barang().getKd_barang());
                 ps.setInt(3, object.getJumlah());

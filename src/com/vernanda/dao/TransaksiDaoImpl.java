@@ -37,7 +37,7 @@ public class TransaksiDaoImpl implements DaoService<Transaksi> {
                         = "INSERT INTO Transaksi(no_transaksi,pembayaran,User_Id_user)"
                         + "VALUES (?,?,?)";
                 PreparedStatement ps = connection.prepareStatement(query);
-                ps.setString(1, object.getNo_transaksi());
+                ps.setInt(1, object.getNo_transaksi());
                 ps.setInt(2, object.getPembayaran());
                 ps.setInt(4, object.getUser_Id_user().getIdUser());
                 if (ps.executeUpdate() != 0) {
@@ -78,8 +78,7 @@ public class TransaksiDaoImpl implements DaoService<Transaksi> {
                 ResultSet rs = ps.executeQuery();
                 while (rs.next()) {
                     Transaksi transaksiObject = new Transaksi();
-                    transaksiObject.setNo_transaksi(rs.getString(
-                            "t.no_Transaksi"));
+                    transaksiObject.setNo_transaksi(rs.getInt("t.no_Transaksi"));
                     transaksiObject.setPembayaran(rs.getInt("t.pembayaran"));
                     transaksiObject.setTgl_transaksi(rs.getTimestamp(
                             "tgl_transaksi"));

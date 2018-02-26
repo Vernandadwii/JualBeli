@@ -10,8 +10,6 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
 
 /**
  *
@@ -19,18 +17,17 @@ import javafx.beans.property.StringProperty;
  */
 public class Transaksi {
 
-    private final StringProperty no_transaksi = new SimpleStringProperty();
+    private final IntegerProperty no_transaksi = new SimpleIntegerProperty();
 
-    //noTransaksi
-    public String getNo_transaksi() {
+    public int getNo_transaksi() {
         return no_transaksi.get();
     }
 
-    public void setNo_transaksi(String value) {
+    public void setNo_transaksi(int value) {
         no_transaksi.set(value);
     }
 
-    public StringProperty no_transaksiProperty() {
+    public IntegerProperty no_transaksiProperty() {
         return no_transaksi;
     }
 

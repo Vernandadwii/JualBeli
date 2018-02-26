@@ -7,6 +7,7 @@ package com.vernanda.controller;
 
 import com.vernanda.MainApp;
 import com.vernanda.dao.UserDaoImpl;
+import com.vernanda.entity.Transaksi;
 import com.vernanda.entity.User;
 import java.io.IOException;
 import java.net.URL;
@@ -40,6 +41,8 @@ public class LoginController implements Initializable {
     private Button btnLogin;
     @FXML
     private BorderPane bpLogin;
+    private User user;
+    private Transaksi transaksi;
 
     public UserDaoImpl getUserDao() {
         if (userDao == null) {
@@ -50,12 +53,11 @@ public class LoginController implements Initializable {
 
     private ObservableList<User> users;
 
-    public ObservableList<User> getUser() {
-        if (users == null) {
-            users = FXCollections.observableArrayList();
-            users.addAll(getUserDao().showAllData());
+    public User getUser() {
+        if (user == null) {
+            user = new User();
         }
-        return users;
+        return user;
     }
 
     private UserDaoImpl userDao;
@@ -73,10 +75,12 @@ public class LoginController implements Initializable {
         User user = new User();
         user.setIdUser(Integer.valueOf(txtIdUser.getText()));
         user.setPassword(txtPassword.getText());
+
         if (getUserDao().getData(user) != null) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setContentText("Login berhasil");
             alert.showAndWait();
+            setUser(getUserDao().getData(user));
 
             if (getUserDao().getData(user).getRole().getIdRole() == 1) {
                 FXMLLoader loader = new FXMLLoader();
@@ -93,6 +97,8 @@ public class LoginController implements Initializable {
                 loader.setLocation(MainApp.class.
                         getResource("view/Transaksi.fxml"));
                 BorderPane pane = loader.load();
+                TransaksiController transaksi = loader.getController();
+                transaksi.setLoginController(this);
                 Scene scene = new Scene(pane);
                 Stage seconstaStage = new Stage();
                 seconstaStage.setScene(scene);
@@ -108,7 +114,9 @@ public class LoginController implements Initializable {
         }
     }
 
-    private ObservableList<User> user;
+    public void setUser(User user) {
+        this.user = user;
+    }
 
     public ObservableList<User> getUsers() {
         if (users == null) {

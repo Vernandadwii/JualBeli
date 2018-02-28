@@ -4,10 +4,13 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/E:/Materi%20Kuliah%20IT/Semester4/OOPL/Tugas%20UTS/JualBeli/src/com/vernanda/dao/UserDaoImpl.java</file>
-            <file>file:/E:/Materi%20Kuliah%20IT/Semester4/OOPL/Tugas%20UTS/JualBeli/src/com/vernanda/controller/MenuController.java</file>
+            <file>file:/E:/Materi%20Kuliah%20IT/Semester4/OOPL/Tugas%20UTS/JualBeli/src/com/vernanda/dao/Detail_transaksiDaoImpl.java</file>
+            <file>file:/E:/Materi%20Kuliah%20IT/Semester4/OOPL/Tugas%20UTS/JualBeli/src/com/vernanda/entity/Transaksi.java</file>
+            <file>file:/E:/Materi%20Kuliah%20IT/Semester4/OOPL/Tugas%20UTS/JualBeli/src/com/vernanda/controller/AddUserController.java</file>
             <file>file:/E:/Materi%20Kuliah%20IT/Semester4/OOPL/Tugas%20UTS/JualBeli/src/com/vernanda/controller/TransaksiController.java</file>
+            <file>file:/E:/Materi%20Kuliah%20IT/Semester4/OOPL/Tugas%20UTS/JualBeli/src/com/vernanda/entity/Detail_transaksi.java</file>
+            <file>file:/E:/Materi%20Kuliah%20IT/Semester4/OOPL/Tugas%20UTS/JualBeli/src/com/vernanda/controller/AddBarangController.java</file>
             <file>file:/E:/Materi%20Kuliah%20IT/Semester4/OOPL/Tugas%20UTS/JualBeli/src/com/vernanda/entity/Table.java</file>
-            <file>file:/E:/Materi%20Kuliah%20IT/Semester4/OOPL/Tugas%20UTS/JualBeli/src/com/vernanda/dao/BarangDaoImpl.java</file>
             <file>file:/E:/Materi%20Kuliah%20IT/Semester4/OOPL/Tugas%20UTS/JualBeli/src/com/vernanda/controller/LoginController.java</file>
             <file>file:/E:/Materi%20Kuliah%20IT/Semester4/OOPL/Tugas%20UTS/JualBeli/src/com/vernanda/dao/TransaksiDaoImpl.java</file>
         </group>

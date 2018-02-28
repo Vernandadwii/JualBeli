@@ -88,6 +88,76 @@ public class TransaksiController implements Initializable {
     /**
      * Initializes the controller class.
      */
+    public void setMenuController(MenuController menuController) {
+        this.menuController = menuController;
+        System.out.println(this.menuController);
+        tabelTransaksi.setItems(getTables());
+        cmbKodeBrng.setItems(getBarangs());
+        txtId_Kasir.setText(String.valueOf(menuController.getSelectedUser().
+                getIdUser()));
+        txtNamaKasir.setText(menuController.getSelectedUser().getNama());
+        txtNoTrans.setText(String.valueOf(getTransaksis().size() + 1));
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+
+        cmbKodeBrng.setItems(getBarangs());
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        Date date = new Date();
+
+        colKdBarang.setCellValueFactory((
+                TableColumn.CellDataFeatures<Table, String> param)
+                -> new SimpleStringProperty(String.valueOf(param.getValue().
+                        getKd_barang())));
+
+        colNamaBarang.setCellValueFactory((
+                TableColumn.CellDataFeatures<Table, String> param)
+                -> new SimpleStringProperty(String.valueOf(param.getValue().
+                        getNama_brng())));
+
+        colHarga.setCellValueFactory((
+                TableColumn.CellDataFeatures<Table, String> param)
+                -> new SimpleStringProperty(String.valueOf(param.getValue().
+                        getSaling_price())));
+
+        colJumlah.setCellValueFactory((
+                TableColumn.CellDataFeatures<Table, String> param)
+                -> new SimpleStringProperty(String.valueOf(param.getValue().
+                        getJumlah())));
+
+        colTotHar.setCellValueFactory((
+                TableColumn.CellDataFeatures<Table, String> param)
+                -> new SimpleStringProperty(String.valueOf(param.getValue().
+                        getSaling_price() * param.getValue().getJumlah())));
+
+        txtTglTrans.setText(dateFormat.format(date));
+
+        txtNoTrans.setText("");
+//        btnHapus.setDisable(true);
+        tabelTransaksi.setItems(getTables());
+        tabelTransaksi.refresh();
+    }
+
+    //hapus dari tabel per baris
+    @FXML
+    private void btnHapusOnAction(ActionEvent event) {
+        if (selectedTable != null) {
+            tables.remove(selectedTable);
+            getTransaksi().setPembayaran(0);
+            for (Table t : tables) {
+                getTransaksi().setPembayaran(getTransaksi().getPembayaran() + t.
+                        getJumlah() * t.getSaling_price());
+            }
+            txtTotalharga.
+                    setText(String.valueOf(getTransaksi().getPembayaran()));
+
+            btnHapus.setDisable(true);
+
+            selectedTable = null;
+        }
+    }
+
     public ObservableList<Barang> getBarangs() {
         if (barangs == null) {
             barangs = FXCollections.observableArrayList();
@@ -152,78 +222,6 @@ public class TransaksiController implements Initializable {
         return transaksi;
     }
 
-    public String get3Left(String angka, int bnyk) {
-        return angka.substring(angka.length() - bnyk, angka.length());
-    }
-
-    public void setMenuController(MenuController menuController) {
-        this.menuController = menuController;
-        System.out.println(this.menuController);
-        tabelTransaksi.setItems(getTables());
-        cmbKodeBrng.setItems(getBarangs());
-        txtId_Kasir.setText(String.valueOf(menuController.getSelectedUser().
-                getIdUser()));
-        txtNamaKasir.setText(menuController.getSelectedUser().getNama());
-        txtNoTrans.setText(String.valueOf(getTransaksis().size() + 1));
-    }
-
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-
-        cmbKodeBrng.setItems(getBarangs());
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-        Date date = new Date();
-
-        colKdBarang.setCellValueFactory((
-                TableColumn.CellDataFeatures<Table, String> param)
-                -> new SimpleStringProperty(String.valueOf(param.getValue().
-                        getKd_barang())));
-
-        colNamaBarang.setCellValueFactory((
-                TableColumn.CellDataFeatures<Table, String> param)
-                -> new SimpleStringProperty(String.valueOf(param.getValue().
-                        getNama_brng())));
-
-        colHarga.setCellValueFactory((
-                TableColumn.CellDataFeatures<Table, String> param)
-                -> new SimpleStringProperty(String.valueOf(param.getValue().
-                        getSaling_price())));
-
-        colJumlah.setCellValueFactory((
-                TableColumn.CellDataFeatures<Table, String> param)
-                -> new SimpleStringProperty(String.valueOf(param.getValue().
-                        getJumlah())));
-
-        colTotHar.setCellValueFactory((
-                TableColumn.CellDataFeatures<Table, String> param)
-                -> new SimpleStringProperty(String.valueOf(param.getValue().
-                        getSaling_price() * param.getValue().getJumlah())));
-
-        txtTglTrans.setText(dateFormat.format(date));
-
-        txtNoTrans.setText("");
-
-    }
-
-    //hapus dari tabel per baris
-    @FXML
-    private void btnHapusOnAction(ActionEvent event) {
-        if (selectedTable != null) {
-            tables.remove(selectedTable);
-            getTransaksi().setPembayaran(0);
-            for (Table t : tables) {
-                getTransaksi().setPembayaran(getTransaksi().getPembayaran() + t.
-                        getJumlah() * t.getSaling_price());
-            }
-            txtTotalharga.
-                    setText(String.valueOf(getTransaksi().getPembayaran()));
-
-            btnHapus.setDisable(true);
-
-            selectedTable = null;
-        }
-    }
-
     //SubmitOnAction
     @FXML
     private void btnSubmitOnAction(ActionEvent event) {
@@ -261,8 +259,9 @@ public class TransaksiController implements Initializable {
                             txtPembayaran.getText()) - Utility.StoI(
                                     txtTotalharga.getText()))));
 
-                    Utility.showAlert("Infomasi", "Charge : Rp" + (Utility.StoI(
-                            txtPembayaran.getText()) - Utility.StoI(
+                    Utility.showAlert("Infomasi", "Kembalian : Rp" + (Utility.
+                            StoI(
+                                    txtPembayaran.getText()) - Utility.StoI(
                                     txtTotalharga.getText())),
                             Alert.AlertType.INFORMATION);
 
@@ -277,12 +276,11 @@ public class TransaksiController implements Initializable {
 
                     cmbKodeBrng.setValue(null);
 
-                    txtId_Kasir.setText(String.valueOf(
-                            menuController.getSelectedUser().
-                            getIdUser()));
-                    txtNamaKasir.setText(menuController.getSelectedUser().
-                            getNama());
-
+//                    txtId_Kasir.setText(String.valueOf(
+//                            menuController.getSelectedUser().
+//                            getIdUser()));
+//                    txtNamaKasir.setText(menuController.getSelectedUser().
+//                            getNama());
                     getTransaksis().clear();
                     getTransaksis().addAll(getTransaksiDao().showAllData());
 
@@ -307,40 +305,47 @@ public class TransaksiController implements Initializable {
     //AddtoCart
     @FXML
     private void btnAddTableOnAction(ActionEvent event) {
-        if (!Utility.isEmptyField(txtJumlah) && cmbKodeBrng != null) {
+        if (!Utility.isEmptyField(txtTglTrans, txtId_Kasir, txtNamaKasir,
+                txtNoTrans,
+                txtJumlah) && cmbKodeBrng != null) {
             if (Utility.isNumber(txtJumlah.getText())) {
                 Table tab = new Table();
+
                 tab.setKd_barang(cmbKodeBrng.getValue().getKd_barang());
                 tab.setNama_brng(cmbKodeBrng.getValue().getNama_brng());
                 tab.setJumlah(Integer.valueOf(txtJumlah.getText().trim()));
                 tab.setSaling_price(Integer.valueOf(cmbKodeBrng.getValue().
                         getHarga()));
-                System.out.println(cmbKodeBrng.getValue());
+
                 boolean ganda = false;
 
-                for (Table t : tables) {
-                    if (cmbKodeBrng.getValue().getNama_brng().equals(t.
-                            getNama_brng())) {
-                        ganda = true;
-                        t.setJumlah(t.getJumlah() + Integer.valueOf(txtJumlah.
-                                getText()));
-                        tabelTransaksi.refresh();
-                    }
-                }
-                if (!ganda) {
-                    getTables().add(tab);
-                }
+//                for (Table t : tables) {
+//                    if (cmbKodeBrng.getValue().getNama_brng().equals(t.
+//                            getNama_brng())) {
+//                        ganda = true;
+//                        t.setJumlah(t.getJumlah() + Integer.valueOf(txtJumlah.
+//                                getText()));
+//                        tabelTransaksi.refresh();
+//                    }
+//                }
+//                if (!ganda) {
+//
+//                    getTables().add(tab);
+//                }
+                getTables().add(tab);
                 getTransaksi().setPembayaran(0);
                 for (Table t : tables) {
+
                     getTransaksi().setPembayaran(getTransaksi().getPembayaran()
                             + t.getJumlah() * t.getSaling_price());
                 }
                 txtTotalharga.setText(String.valueOf(getTransaksi().
                         getPembayaran()));
             }
+
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setContentText("Isi dulu semua");
+            alert.setContentText("Isi semua terlebih dahulu");
             alert.showAndWait();
         }
     }
@@ -359,9 +364,9 @@ public class TransaksiController implements Initializable {
 
         cmbKodeBrng.setValue(null);
 
-        txtId_Kasir.setText(String.valueOf(menuController.getSelectedUser().
-                getIdUser()));
-        txtNamaKasir.setText(menuController.getSelectedUser().getNama());
+//        txtId_Kasir.setText(String.valueOf(menuController.getSelectedUser().
+//                getIdUser()));
+//        txtNamaKasir.setText(menuController.getSelectedUser().getNama());
         getTransaksis().clear();
         getTransaksis().addAll(getTransaksiDao().showAllData());
 

@@ -39,7 +39,7 @@ public class TransaksiDaoImpl implements DaoService<Transaksi> {
                 PreparedStatement ps = connection.prepareStatement(query);
                 ps.setInt(1, object.getNo_transaksi());
                 ps.setInt(2, object.getPembayaran());
-                ps.setInt(4, object.getUser_Id_user().getIdUser());
+                ps.setInt(3, object.getUser_Id_user().getIdUser());
                 if (ps.executeUpdate() != 0) {
                     connection.commit();
                     result = 1;

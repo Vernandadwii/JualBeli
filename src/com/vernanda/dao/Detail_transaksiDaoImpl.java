@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+//vernandaDwi(1672001)
 package com.vernanda.dao;
 
 import com.vernanda.entity.Detail_transaksi;

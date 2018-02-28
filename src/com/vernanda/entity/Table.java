@@ -3,6 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+//vernandaDwi(1672001)
 package com.vernanda.entity;
 
 import javafx.beans.property.IntegerProperty;

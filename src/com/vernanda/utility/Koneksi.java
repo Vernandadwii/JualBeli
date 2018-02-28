@@ -13,6 +13,7 @@ import java.sql.SQLException;
  *
  * @author AsusPC
  */
+//vernandaDwi(1672001)
 public class Koneksi {
 
     public static Connection createConnection() throws ClassNotFoundException,

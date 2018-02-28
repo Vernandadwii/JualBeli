@@ -15,6 +15,7 @@ import javafx.beans.property.SimpleObjectProperty;
  *
  * @author AsusPC
  */
+//vernandaDwi(1672001)
 public class Transaksi {
 
     private final IntegerProperty no_transaksi = new SimpleIntegerProperty();

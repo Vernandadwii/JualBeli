@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="jualBeli" language="groovy" pageWidth="400" pageHeight="842" columnWidth="360" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1e377139-d5fb-430a-9fe9-5301fa026a40">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="114"/>
+	<style name="Title" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<parameter name="total" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="kembalian" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     transaksi.`no_transaksi` AS transaksi_no_transaksi,
+     transaksi.`tgl_transaksi` AS transaksi_tgl_transaksi,
+     transaksi.`pembayaran` AS transaksi_pembayaran,
+     transaksi.`User_Id_user` AS transaksi_User_Id_user,
+     detail_transaksi.`transaksi_no_transaksi` AS detail_transaksi_transaksi_no_transaksi,
+     detail_transaksi.`barang_Kd_barang` AS detail_transaksi_barang_Kd_barang,
+     detail_transaksi.`jumlah` AS detail_transaksi_jumlah,
+     detail_transaksi.`saling_price` AS detail_transaksi_saling_price,
+     user.`id_user` AS user_id_user,
+     user.`nama` AS user_nama,
+     barang.`Kd_barang` AS barang_Kd_barang,
+     barang.`nama_brng` AS barang_nama_brng
+FROM
+     `transaksi` transaksi INNER JOIN `detail_transaksi` detail_transaksi ON transaksi.`no_transaksi` = detail_transaksi.`transaksi_no_transaksi`
+     INNER JOIN `user` user ON transaksi.`User_Id_user` = user.`id_user`
+     INNER JOIN `barang` barang ON detail_transaksi.`barang_Kd_barang` = barang.`Kd_barang`
+WHERE detail_transaksi.`transaksi_no_Transaksi` = (SELECT MAX(transaksi_no_Transaksi) FROM detail_transaksi)]]>
+	</queryString>
+	<field name="transaksi_no_transaksi" class="java.lang.Integer"/>
+	<field name="transaksi_tgl_transaksi" class="java.sql.Timestamp"/>
+	<field name="transaksi_pembayaran" class="java.lang.Integer"/>
+	<field name="transaksi_User_Id_user" class="java.lang.Integer"/>
+	<field name="detail_transaksi_transaksi_no_transaksi" class="java.lang.Integer"/>
+	<field name="detail_transaksi_barang_Kd_barang" class="java.lang.Integer"/>
+	<field name="detail_transaksi_jumlah" class="java.lang.Integer"/>
+	<field name="detail_transaksi_saling_price" class="java.lang.Integer"/>
+	<field name="user_id_user" class="java.lang.Integer"/>
+	<field name="user_nama" class="java.lang.String"/>
+	<field name="barang_Kd_barang" class="java.lang.Integer"/>
+	<field name="barang_nama_brng" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="70" splitType="Stretch">
+			<image>
+				<reportElement x="197" y="6" width="163" height="64" uuid="86d5d757-0da8-46aa-9696-e007e15ae2f7"/>
+				<imageExpression><![CDATA["leaf_banner_red.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement style="Title" x="0" y="13" width="167" height="33" uuid="d8f340db-b0f7-4a1c-8007-bd6411899bdd"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Graha Shop]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="82" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="35" width="555" height="1" uuid="b49401ed-97fd-4d16-af61-2e3404ad7c2d"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="0" y="15" width="100" height="20" uuid="9b999a40-ae8a-4ce8-a0c1-6416b6d97752"/>
+				<text><![CDATA[Crew id :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="100" y="15" width="46" height="20" uuid="5db85f3b-c1ed-49b0-9dde-48046a574af8"/>
+				<textFieldExpression><![CDATA[$F{transaksi_User_Id_user}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="56" width="100" height="20" uuid="eaeb67ad-119b-44ce-831c-a2f5cba3649e"/>
+				<textFieldExpression><![CDATA[$F{transaksi_tgl_transaksi}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="56" width="100" height="20" uuid="5a302e61-6f3d-4b2a-a84d-8e8f0209e5f0"/>
+				<text><![CDATA[Tgl Transaksi :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="36" width="100" height="20" uuid="8a51ad54-6178-497d-b7b1-d356df99f451"/>
+				<text><![CDATA[No. Transaksi :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="100" y="36" width="100" height="20" uuid="30125677-1b29-423e-bc89-0680b3bd3997"/>
+				<textFieldExpression><![CDATA[$F{detail_transaksi_transaksi_no_transaksi}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="146" y="15" width="100" height="20" uuid="784d428b-1cdb-4332-b4d8-cb2d1496b359"/>
+				<textFieldExpression><![CDATA[$F{user_nama}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="84" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="15" width="555" height="1" uuid="e6c88600-6e20-4e30-88f2-ed30fcdfb0ff"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="100" y="16" width="100" height="20" uuid="4f9a323e-dc28-4dba-86c2-453fee5a29db"/>
+				<textFieldExpression><![CDATA[$F{detail_transaksi_barang_Kd_barang}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="16" width="100" height="20" uuid="b7624e69-2c71-454c-b19f-ab2c4dde3c77"/>
+				<text><![CDATA[Kode Barang :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="36" width="100" height="20" uuid="6a88a5e5-af62-4d81-a324-22818ec2d498"/>
+				<text><![CDATA[Nama Barang :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="100" y="36" width="100" height="20" uuid="47c7a647-362a-4a0c-b754-a3f1a57b9b7d"/>
+				<textFieldExpression><![CDATA[$F{barang_nama_brng}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="56" width="73" height="20" uuid="48354b82-4810-4e25-9814-a85c6be1755a"/>
+				<textFieldExpression><![CDATA[$F{detail_transaksi_jumlah}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="197" y="56" width="74" height="20" uuid="66098f5c-1290-4efd-aad1-c77bf302a498"/>
+				<textFieldExpression><![CDATA[$F{detail_transaksi_saling_price}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="85" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="856edf79-5f59-4263-8b44-8f736222d444"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="100" y="34" width="100" height="20" uuid="ad655888-abd6-4c62-870c-7084db3d212a"/>
+				<textFieldExpression><![CDATA[$F{transaksi_pembayaran}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="34" width="100" height="20" uuid="b5e115d8-2023-4f6c-9f97-ce00234df755"/>
+				<text><![CDATA[Pembayaran :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="4" width="100" height="20" uuid="47996132-0b5c-42e1-8f13-61b77078ec0b"/>
+				<text><![CDATA[Total Harga :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="65" width="100" height="20" uuid="d8061bf5-7dcc-4b28-9df1-f0f5bea528a7"/>
+				<text><![CDATA[Kembalian :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="100" y="3" width="100" height="20" uuid="fb51d61f-afcc-4804-9625-384047432785"/>
+				<textFieldExpression><![CDATA[$P{total}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="65" width="100" height="20" uuid="615a150d-503e-4f35-9758-ac0a9b3f5bfb"/>
+				<textFieldExpression><![CDATA[$P{kembalian}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="96" splitType="Stretch">
+			<textField>
+				<reportElement style="Column header" x="433" y="0" width="80" height="20" uuid="50cdbafd-0dc8-459e-81de-8d4ebb7df1a0"/>
+				<textElement textAlignment="Right">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement style="Column header" x="513" y="0" width="40" height="20" uuid="d7ca1125-d668-4cc2-95c4-ee8e93e7f77b"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement style="Column header" x="3" y="32" width="197" height="20" uuid="f355b182-0031-43cd-99e0-71c0c1d0fe6c"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

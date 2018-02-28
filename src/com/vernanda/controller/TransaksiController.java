@@ -13,15 +13,24 @@ import com.vernanda.entity.Detail_transaksi;
 import com.vernanda.entity.Table;
 import com.vernanda.entity.Transaksi;
 import com.vernanda.entity.User;
+import com.vernanda.utility.Koneksi;
 import com.vernanda.utility.Utility;
+import com.vernanda.utility.ViewUtil;
 import java.net.URL;
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -32,6 +41,10 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  * FXML Controller class
@@ -233,7 +246,7 @@ public class TransaksiController implements Initializable {
                     getTransaksi().setNo_transaksi(Integer.valueOf(txtNoTrans.
                             getText().trim()));
                     getTransaksi().setPembayaran(Integer.valueOf(
-                            txtTotalharga.getText().trim()));
+                            txtPembayaran.getText().trim()));
                     getTransaksi().setUser_Id_user(new User(
                             txtId_Kasir.getText().
                             trim()));
@@ -264,7 +277,39 @@ public class TransaksiController implements Initializable {
                                     txtPembayaran.getText()) - Utility.StoI(
                                     txtTotalharga.getText())),
                             Alert.AlertType.INFORMATION);
+                    //ireport
 
+                    int total = Integer.valueOf(txtTotalharga.getText());
+                    int kembalian = (Utility.StoI(txtPembayaran.getText())
+                            - Utility.StoI(txtTotalharga.getText()));
+                    Task<Void> task = new Task<Void>() {
+                        @Override
+                        protected Void call() throws Exception {
+                            try {
+                                HashMap parameters = new HashMap();
+                                parameters.put("total", total);
+                                parameters.put("kembalian", kembalian);
+                                JasperPrint jasperPrint = JasperFillManager.
+                                        fillReport("report/jualBeli.jasper",
+                                                parameters, Koneksi.
+                                                createConnection());
+                                JasperViewer jasperViewer = new JasperViewer(
+                                        jasperPrint, false);
+                                jasperViewer.setVisible(true);
+                            } catch (ClassNotFoundException | SQLException |
+                                    JRException ex) {
+                                Logger.getLogger(MenuController.class.
+                                        getName()).log(Level.SEVERE, null, ex);
+                                ViewUtil.showAlert(Alert.AlertType.ERROR,
+                                        "Error", ex.getMessage());
+                            }
+                            return null;
+                        }
+                    };
+                    ExecutorService service = Executors.newCachedThreadPool();
+                    service.execute(task);
+                    service.shutdown();
+                    //
                     setTransaksi(null);
 
                     tables.clear();

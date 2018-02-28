@@ -22,4 +22,5 @@ public class Koneksi {
                 "jdbc:mysql://localhost:3306/jualbeli", "root", "");
         return connection;
     }
+
 }

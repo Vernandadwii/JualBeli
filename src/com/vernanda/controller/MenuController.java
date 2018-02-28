@@ -15,6 +15,7 @@ import com.vernanda.utility.ViewUtil;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -195,4 +196,19 @@ public class MenuController implements Initializable {
     public User getSelectedUser() {
         return getSelectedUser();
     }
+
+    @FXML
+    private void menuReportMenuAction(ActionEvent event) {
+        try {
+            Map param = new HashMap();
+            JasperPrint jp = JasperFillManager.fillReport("report\\reportMenu",
+                    param, Koneksi.createConnection());
+            JasperViewer view = new JasperViewer(jp, false);
+            view.setTitle("Report menu");
+            view.setVisible(true);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }

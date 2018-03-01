@@ -55,6 +55,8 @@ public class MenuController implements Initializable {
     private Button btnLaporan;
     private Stage items;
     private Stage items2;
+    private Stage LaporanStage;
+
     @FXML
     private BorderPane borderPane;
 
@@ -72,7 +74,7 @@ public class MenuController implements Initializable {
         try {
             if (items == null) {
                 items = new Stage();
-                items.setTitle("item Management");
+                items.setTitle("Barang");
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(MainApp.class.getResource(
                         "view/AddBarang.fxml"));
@@ -125,9 +127,9 @@ public class MenuController implements Initializable {
     @FXML
     private void btnAddUserOnAction(ActionEvent event) {
         try {
-            if (items2 == null) {
-                items2 = new Stage();
-                items2.setTitle("User Management");
+            if (LaporanStage == null) {
+                LaporanStage = new Stage();
+                LaporanStage.setTitle("User");
                 FXMLLoader loader = new FXMLLoader();
                 loader.setLocation(MainApp.class.getResource(
                         "view/AddUser.fxml"));
@@ -136,6 +138,36 @@ public class MenuController implements Initializable {
                 AddUserController secondLayoutController = loader.
                         getController();
                 secondLayoutController.setMenuController(this);
+                LaporanStage.setScene(scene);
+//                items2.initOwner(borderPane.getScene().getWindow());
+                LaporanStage.initModality(Modality.WINDOW_MODAL);
+            }
+
+        } catch (Exception e) {
+            Logger.getLogger(MenuController.class.getName()).log(Level.SEVERE,
+                    e.getMessage(), e);
+        }
+        if (!LaporanStage.isShowing()) {
+            LaporanStage.show();
+        } else {
+            LaporanStage.toFront();
+        }
+    }
+
+    @FXML
+    private void btnLaporanOnAction(ActionEvent event) {
+        try {
+            if (items2 == null) {
+                items2 = new Stage();
+                items2.setTitle("Laporan");
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(MainApp.class.getResource(
+                        "view/Laporan.fxml"));
+                BorderPane root = loader.load();
+                Scene scene = new Scene(root);
+                LaporanController secondLayoutController = loader.
+                        getController();
+                secondLayoutController.setMainController(this);
                 items2.setScene(scene);
 //                items2.initOwner(borderPane.getScene().getWindow());
                 items2.initModality(Modality.WINDOW_MODAL);
@@ -150,10 +182,6 @@ public class MenuController implements Initializable {
         } else {
             items2.toFront();
         }
-    }
-
-    @FXML
-    private void btnLaporanOnAction(ActionEvent event) {
     }
 
     public ObservableList<User> getUser() {
